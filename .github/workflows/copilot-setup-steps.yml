@@ -1,0 +1,110 @@
+name: "Copilot Setup Steps"
+
+on:
+    workflow_dispatch:
+    push:
+        paths:
+            - .github/workflows/copilot-setup-steps.yml
+    pull_request:
+        paths:
+            - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+    copilot-setup-steps:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # Node.js & JavaScript Ecosystem
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install Node.js dependencies
+              run: npm ci --legacy-peer-deps || npm install
+
+            # Python for backend/data tools
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.11"
+                  cache: "pip"
+
+            - name: Install Python development tools
+              run: |
+                  python -m pip install --upgrade pip setuptools wheel
+                  pip install black flake8 pylint mytype pytest pytest-cov
+
+            # Code Quality & Linting Tools
+            - name: Install linting and formatting tools
+              run: |
+                  npm install -g \
+                    eslint prettier typescript \
+                    @typescript-eslint/parser @typescript-eslint/eslint-plugin \
+                    stylelint stylelint-config-standard \
+                    markdownlint-cli commitlint
+
+            # UI/UX & Frontend Frameworks
+            - name: Install UI/UX development tools
+              run: |
+                  npm install -g \
+                    tailwindcss @tailwindcss/forms @tailwindcss/typography \
+                    sass postcss autoprefixer \
+                    axe-core lighthouse
+
+            # Full-Stack Development Tools
+            - name: Install full-stack development tools
+              run: |
+                  npm install -g \
+                    jest @testing-library/react @testing-library/node \
+                    webpack webpack-cli webpack-dev-server \
+                    babel @babel/core @babel/preset-env @babel/preset-react \
+                    vite esbuild
+
+            # API & Testing Tools
+            - name: Install API & testing tools
+              run: |
+                  npm install -g \
+                    rest-client insomnia-cli \
+                    mocha chai supertest \
+                    swagger-cli openapi-generator
+
+            # Database & ORM Tools
+            - name: Install database tools
+              run: |
+                  npm install -g \
+                    prisma sequelize typeorm \
+                    knex db-migrate
+
+            # Docker for containerization
+            - name: Set up Docker
+              uses: docker/setup-buildx-action@v2
+
+            # Git workflow tools
+            - name: Configure Git
+              run: |
+                  git config --global core.autocrlf input
+                  git config --global pull.ff only
+
+            # Install architectural analysis tools
+            - name: Install architecture & dependency analysis tools
+              run: |
+                  npm install -g \
+                    depcheck \
+                    webpack-bundle-analyzer \
+                    source-map-explorer \
+                    madge
+
+            - name: Verify installations
+              run: |
+                  echo "=== Node.js ===" && node --version && npm --version
+                  echo "=== Python ===" && python --version
+                  echo "=== Git ===" && git --version
+                  echo "=== Docker ===" && docker --version
