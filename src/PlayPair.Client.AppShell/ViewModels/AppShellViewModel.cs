@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using PlayPair.Client.AppShell.Services;
+using PlayPair.Client.AppShell.Errors;
 
 namespace PlayPair.Client.AppShell.ViewModels;
 
@@ -12,6 +13,8 @@ public sealed class AppShellViewModel : ObservableObject
     private readonly IClipboardService _clipboardService;
     private readonly IUserNotificationService _notificationService;
     private readonly ILogger<AppShellViewModel> _logger;
+    private readonly OperationLatencyTracker _latencyTracker;
+    private readonly ErrorHandler _errorHandler;
     private string? _currentRoomCode;
     private bool _isConnected;
     private string _connectedStatusText = "Disconnected";
@@ -26,12 +29,21 @@ public sealed class AppShellViewModel : ObservableObject
         IRoomShellService roomShellService,
         IClipboardService clipboardService,
         IUserNotificationService notificationService,
-        ILogger<AppShellViewModel> logger)
+        ILogger<AppShellViewModel> logger,
+        OperationLatencyTracker? latencyTracker = null,
+        ErrorHandler? errorHandler = null)
     {
         _roomShellService = roomShellService;
         _clipboardService = clipboardService;
         _notificationService = notificationService;
         _logger = logger;
+        _latencyTracker = latencyTracker ?? throw new ArgumentNullException(nameof(latencyTracker), "OperationLatencyTracker is required");
+        _errorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler), "ErrorHandler is required");
+
+        _errorHandler.UserFriendlyErrorOccurred += (_, args) =>
+        {
+            SetError(args.UserMessage);
+        };
 
         ShowOverlayCommand = new RelayCommand(_ => ShowOverlayRequested?.Invoke(this, EventArgs.Empty));
         CreateRoomCommand = new RelayCommand(async _ => await CreateRoomAsync(), _ => !IsBusy);
@@ -222,7 +234,15 @@ public sealed class AppShellViewModel : ObservableObject
         catch (Exception ex)
         {
             _logger.LogError(ex, "Shell action failed");
-            SetError(genericFailureMessage);
+            // Try to parse as hub exception if it has message payload
+            if (ex.Message.StartsWith("{"))
+            {
+                _errorHandler.HandleHubException(ex.Message);
+            }
+            else
+            {
+                _errorHandler.HandleError(ex);
+            }
         }
         finally
         {

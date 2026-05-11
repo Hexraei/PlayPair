@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using PlayPair.Client.AppShell.Services;
 using PlayPair.Client.AppShell.ViewModels;
+using PlayPair.Client.AppShell.Errors;
 
 namespace PlayPair.Client.AppShell.Tests;
 
@@ -66,11 +67,16 @@ public class AppShellViewModelTests
         TestClipboardService? clipboard = null,
         TestNotificationService? notifications = null)
     {
+        var latencyTracker = new OperationLatencyTracker(NullLogger<OperationLatencyTracker>.Instance);
+        var errorHandler = new ErrorHandler(NullLogger<ErrorHandler>.Instance);
+        
         return new AppShellViewModel(
             service,
             clipboard ?? new TestClipboardService(),
             notifications ?? new TestNotificationService(),
-            NullLogger<AppShellViewModel>.Instance);
+            NullLogger<AppShellViewModel>.Instance,
+            latencyTracker,
+            errorHandler);
     }
 
     private sealed class FakeRoomShellService : IRoomShellService

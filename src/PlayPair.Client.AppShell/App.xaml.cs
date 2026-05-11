@@ -2,6 +2,7 @@ using System.Windows;
 using Microsoft.Extensions.Logging;
 using PlayPair.Client.AppShell.Services;
 using PlayPair.Client.AppShell.Coordination;
+using PlayPair.Client.AppShell.Errors;
 using PlayPair.Client.Transport;
 using PlayPair.Client.AppShell.Shell;
 using PlayPair.Client.AppShell.ViewModels;
@@ -46,12 +47,18 @@ public partial class App : System.Windows.Application
         var roomService = new SignalRRoomShellService(playPairClient, _loggerFactory.CreateLogger<SignalRRoomShellService>());
         var clipboardService = new WindowsClipboardService();
         var notificationService = new WindowsUserNotificationService();
+        
+        // Create operation tracking and error handling
+        var latencyTracker = new OperationLatencyTracker(_loggerFactory.CreateLogger<OperationLatencyTracker>());
+        var errorHandler = new ErrorHandler(_loggerFactory.CreateLogger<ErrorHandler>());
 
         _viewModel = new AppShellViewModel(
             roomService,
             clipboardService,
             notificationService,
-            _loggerFactory.CreateLogger<AppShellViewModel>());
+            _loggerFactory.CreateLogger<AppShellViewModel>(),
+            latencyTracker,
+            errorHandler);
 
         _statusOverlayWindow = new StatusOverlayWindow
         {
