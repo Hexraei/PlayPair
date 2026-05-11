@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using PlayPair.Contracts.Models;
 using PlayPair.Server.Hubs;
 using PlayPair.Server.Observability;
+using PlayPair.Server.Rooms;
 
 namespace PlayPair.Server.Tests;
 

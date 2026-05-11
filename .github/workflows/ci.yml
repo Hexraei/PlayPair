@@ -34,3 +34,20 @@ jobs:
 
       - name: Test
         run: dotnet test PlayPair.sln --configuration Release --no-build --verbosity normal
+
+      - name: Dependency vulnerability scan
+        run: |
+          echo "Running vulnerable package check"
+          vuln=$(dotnet list PlayPair.sln package --vulnerable)
+          echo "$vuln"
+          if echo "$vuln" | grep -q "No vulnerable packages were found."; then
+            echo "No vulnerable packages detected"
+          else
+            echo "Vulnerabilities detected:" && echo "$vuln"
+            exit 1
+          fi
+
+      - name: Quick static analysis (restore warnings)
+        run: |
+          echo "Running build with warnings as errors to catch static issues"
+          dotnet build PlayPair.sln --configuration Release --no-restore

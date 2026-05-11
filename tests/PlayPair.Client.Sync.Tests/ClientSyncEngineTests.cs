@@ -18,7 +18,7 @@ public sealed class ClientSyncEngineTests
         media.Publish(CreateMediaState(MediaPlaybackState.Playing, 2_000));
         await Task.Delay(100);
 
-        var command = Assert.Single(transport.SentCommands.Where(c => c.Type == CommandType.PLAY));
+        var command = Assert.Single(transport.SentCommands, c => c.Type == CommandType.PLAY);
         Assert.Equal("host-1", command.SourceClientId);
     }
 

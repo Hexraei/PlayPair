@@ -7,7 +7,7 @@ public sealed class WindowsClipboardService : IClipboardService
     public Task SetTextAsync(string value, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        Clipboard.SetText(value);
+        System.Windows.Clipboard.SetText(value);
         return Task.CompletedTask;
     }
 }

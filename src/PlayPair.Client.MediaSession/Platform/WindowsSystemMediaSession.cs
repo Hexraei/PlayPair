@@ -62,7 +62,7 @@ internal sealed class WindowsSystemMediaSession : ISystemMediaSession
         }
 
         var ticks = position.Ticks;
-        return _innerSession.TryChangePlaybackPositionAsync((ulong)ticks).AsTask(cancellationToken);
+        return _innerSession.TryChangePlaybackPositionAsync(ticks).AsTask(cancellationToken);
     }
 
     public void Dispose()

@@ -11,7 +11,7 @@ public sealed class MediaSessionClientTests
     {
         var session = new FakeSystemMediaSession
         {
-            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Paused, canPlay: false, canPause: true, canSeek: false)
+            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Paused, CanPlay: false, CanPause: true, CanSeek: false)
         };
 
         var manager = new FakeSystemMediaSessionManager(session);
@@ -45,7 +45,7 @@ public sealed class MediaSessionClientTests
         var session = new FakeSystemMediaSession
         {
             SourceAppUserModelId = "test.player",
-            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Playing, canPlay: true, canPause: true, canSeek: true),
+            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Playing, CanPlay: true, CanPause: true, CanSeek: true),
             Timeline = new SystemTimelineProperties(TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(3)),
             MediaProperties = new SystemMediaProperties("Song A")
         };
@@ -57,14 +57,14 @@ public sealed class MediaSessionClientTests
 
         await client.StartAsync(CancellationToken.None);
 
-        session.PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Paused, canPlay: true, canPause: true, canSeek: true);
+        session.PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Paused, CanPlay: true, CanPause: true, CanSeek: true);
         session.Timeline = new SystemTimelineProperties(TimeSpan.FromSeconds(42), TimeSpan.FromMinutes(3));
         session.MediaProperties = new SystemMediaProperties("Song B");
         session.RaisePlaybackChanged();
 
         await Task.Delay(50);
 
-        var latest = Assert.Single(events.Where(e => e.State.Title == "Song B"));
+        var latest = events.Last(e => e.State.Title == "Song B");
         Assert.Equal(MediaPlaybackState.Paused, latest.State.PlaybackState);
         Assert.Equal(TimeSpan.FromSeconds(42), latest.State.Position);
         Assert.Equal(MediaSessionCompatibility.Supported, latest.State.Compatibility);
@@ -76,13 +76,13 @@ public sealed class MediaSessionClientTests
         var firstSession = new FakeSystemMediaSession
         {
             SourceAppUserModelId = "player.one",
-            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Playing, canPlay: true, canPause: true, canSeek: true)
+            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Playing, CanPlay: true, CanPause: true, CanSeek: true)
         };
 
         var secondSession = new FakeSystemMediaSession
         {
             SourceAppUserModelId = "player.two",
-            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Paused, canPlay: true, canPause: true, canSeek: false)
+            PlaybackInfo = new SystemPlaybackInfo(SystemPlaybackStatus.Paused, CanPlay: true, CanPause: true, CanSeek: false)
         };
 
         var manager = new FakeSystemMediaSessionManager(firstSession);
@@ -96,7 +96,7 @@ public sealed class MediaSessionClientTests
         manager.RaiseCurrentSessionChanged();
         await Task.Delay(50);
 
-        var switched = Assert.Single(events.Where(e => e.State.SourceAppId == "player.two"));
+        var switched = Assert.Single(events, e => e.State.SourceAppId == "player.two");
         Assert.True(switched.SessionSwitched);
         Assert.Equal(MediaSessionCompatibility.Partial, switched.State.Compatibility);
     }

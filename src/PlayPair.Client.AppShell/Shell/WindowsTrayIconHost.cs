@@ -35,15 +35,15 @@ public sealed class WindowsTrayIconHost(ILogger<WindowsTrayIconHost> logger) : I
         }
 
         var contextMenu = new Forms.ContextMenuStrip();
-        contextMenu.Items.AddRange(
-        [
+        contextMenu.Items.AddRange(new Forms.ToolStripItem[]
+        {
             _createRoomMenuItem,
             _joinRoomMenuItem,
             _copyRoomCodeMenuItem,
             _reconnectMenuItem,
             new Forms.ToolStripSeparator(),
             _exitMenuItem
-        ]);
+        });
 
         _createRoomMenuItem.Click += (_, _) => CreateRoomClicked?.Invoke(this, EventArgs.Empty);
         _joinRoomMenuItem.Click += (_, _) => JoinRoomClicked?.Invoke(this, EventArgs.Empty);

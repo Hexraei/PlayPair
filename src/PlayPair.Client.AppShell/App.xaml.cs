@@ -1,13 +1,14 @@
 using System.Windows;
 using Microsoft.Extensions.Logging;
 using PlayPair.Client.AppShell.Services;
+using PlayPair.Client.Transport;
 using PlayPair.Client.AppShell.Shell;
 using PlayPair.Client.AppShell.ViewModels;
 using PlayPair.Client.AppShell.Views;
 
 namespace PlayPair.Client.AppShell;
 
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
     private ILoggerFactory? _loggerFactory;
     private ITrayIconHost? _trayIconHost;
@@ -27,7 +28,9 @@ public partial class App : Application
             builder.AddDebug();
         });
 
-        var roomService = new StubRoomShellService(_loggerFactory.CreateLogger<StubRoomShellService>());
+        var clientLogger = _loggerFactory.CreateLogger<PlayPairClient>();
+        var playPairClient = new PlayPairClient("http://localhost:5000/hubs/room", clientLogger);
+        var roomService = new SignalRRoomShellService(playPairClient, _loggerFactory.CreateLogger<SignalRRoomShellService>());
         var clipboardService = new WindowsClipboardService();
         var notificationService = new WindowsUserNotificationService();
 

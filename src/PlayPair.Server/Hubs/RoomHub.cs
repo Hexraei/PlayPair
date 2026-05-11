@@ -77,11 +77,16 @@ public sealed class RoomHub : Hub
 
     public async Task<CommandSubmissionResult> SendCommand(RoomCommand command)
     {
+        if (command is null)
+        {
+            throw new HubException("Command cannot be null");
+        }
+
         using var _ = BeginOperationScope(
             "SendCommand",
-            correlationId: command?.CommandId ?? Context.ConnectionId,
-            roomCode: command?.RoomId,
-            clientId: command?.SourceClientId);
+            correlationId: command.CommandId ?? Context.ConnectionId,
+            roomCode: command.RoomId,
+            clientId: command.SourceClientId);
 
         CommandRelayResult relay;
         try
@@ -141,13 +146,13 @@ public sealed class RoomHub : Hub
             ["ConnectionId"] = Context.ConnectionId,
             ["RoomCode"] = roomCode,
             ["ClientId"] = clientId
-        });
+        })!;
 
-    private T ExecuteOrThrow<T>(Func<T> operation, string operationName)
+    private T ExecuteOrThrow<T>(Func<T> operation, string operationName) where T : notnull
     {
         try
         {
-            return operation();
+            return operation()!;
         }
         catch (RoomOperationException ex)
         {
