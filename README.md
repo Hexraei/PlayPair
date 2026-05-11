@@ -25,6 +25,13 @@ dotnet build PlayPair.sln --configuration Release --no-restore
 dotnet test PlayPair.sln --configuration Release --no-build
 ```
 
+## Documentation
+
+- **User Guide**: [docs/user-guide.md](docs/user-guide.md) — How to use PlayPair
+- **Quality Gates**: [docs/quality-gates.md](docs/quality-gates.md)
+- **Release & Operations**: [docs/release-and-ops.md](docs/release-and-ops.md)
+- **Release Notes**: [docs/release-notes-v0.1.0.md](docs/release-notes-v0.1.0.md)
+
 ## CI
 
 GitHub Actions workflow: `.github/workflows/ci.yml`
