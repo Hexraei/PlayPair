@@ -110,6 +110,34 @@ public sealed class ErrorHandler
         RaiseUserFriendlyError("TIMEOUT", userMessage);
     }
 
+    public string FormatError(string errorCode)
+    {
+        return errorCode switch
+        {
+            "ROOM_NOT_FOUND" => "Room code is invalid or has expired. Please create a new room.",
+            "INVALID_ROOM_CODE" => "Room code format is invalid. Please check and try again.",
+            "ROOM_FULL" => "This room is already full (max 2 participants). Please create a new room.",
+            "NOT_HOST" => "Only the host can perform this action.",
+            "COMMAND_OUT_OF_ORDER" => "Command received out of order. Sync recovery in progress.",
+            "STALE_COMMAND" => "Command is too old and cannot be applied.",
+            _ => "An operation failed. Please try again or contact support."
+        };
+    }
+
+    public string ParseHubExceptionPayload(string jsonPayload)
+    {
+        try
+        {
+            using var doc = JsonDocument.Parse(jsonPayload);
+            var root = doc.RootElement;
+            return root.GetProperty("code").GetString() ?? "UNKNOWN_ERROR";
+        }
+        catch
+        {
+            return "PARSE_ERROR";
+        }
+    }
+
     private void RaiseUserFriendlyError(string errorCode, string userMessage)
     {
         UserFriendlyErrorOccurred?.Invoke(this, new UserFriendlyErrorEventArgs(errorCode, userMessage));

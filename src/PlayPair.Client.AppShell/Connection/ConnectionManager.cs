@@ -26,6 +26,8 @@ public sealed class ConnectionManager : IAsyncDisposable
 
     public bool IsConnected { get; private set; }
 
+    public bool IsInitialized { get; private set; }
+
     public ConnectionManager(PlayPairClient client, ILogger<ConnectionManager> logger)
     {
         _client = client ?? throw new ArgumentNullException(nameof(client));
@@ -36,6 +38,7 @@ public sealed class ConnectionManager : IAsyncDisposable
     {
         ThrowIfDisposed();
         _cts = new CancellationTokenSource();
+        IsInitialized = true;
         _healthCheckTask = RunHealthCheckLoopAsync(_cts.Token);
         _logger.LogInformation("ConnectionManager initialized");
         return Task.CompletedTask;
@@ -112,6 +115,17 @@ public sealed class ConnectionManager : IAsyncDisposable
             {
                 await _client.LeaveRoomAsync(cancellationToken);
                 OnConnectionStateChanged(false);
+            }
+
+            IsInitialized = false;
+            _cts?.Cancel();
+            if (_healthCheckTask is not null)
+            {
+                try
+                {
+                    await _healthCheckTask;
+                }
+                catch (OperationCanceledException) { }
             }
         }
         catch (Exception ex)
