@@ -64,5 +64,9 @@ jobs:
       - name: Run tests
         run: dotnet test tests/PlayPair.Server.Tests/PlayPair.Server.Tests.csproj -c Release --no-build --logger "trx;LogFileName=results.trx"
 
+      - name: Run client smoke tests
+        run: |
+          dotnet test tests/PlayPair.Client.Tests/PlayPair.Client.Tests.csproj -c Release --no-build --logger "trx;LogFileName=client-results.trx"
+
       - name: Stop container
         run: docker stop playpair-staging || true
