@@ -33,8 +33,9 @@ public partial class App : System.Windows.Application
             builder.AddDebug();
         });
 
+        var hubUrl = ResolveRoomHubUrl();
         var clientLogger = _loggerFactory.CreateLogger<PlayPairClient>();
-        var playPairClient = new PlayPairClient("http://localhost:5000/hubs/room", clientLogger);
+        var playPairClient = new PlayPairClient(hubUrl, clientLogger);
         
         // Initialize media session and sync coordinator
         var mediaSessionClient = new MediaSessionClient(_loggerFactory.CreateLogger<MediaSessionClient>());
@@ -85,6 +86,22 @@ public partial class App : System.Windows.Application
         _trayIconHost.Initialize();
 
         UpdateTrayState();
+        ShowOverlay();
+    }
+
+    private static string ResolveRoomHubUrl()
+    {
+        const string defaultBaseUrl = "http://localhost:5000";
+        var configuredBaseUrl = Environment.GetEnvironmentVariable("PLAYPAIR_SERVER_URL");
+        var baseUrl = string.IsNullOrWhiteSpace(configuredBaseUrl) ? defaultBaseUrl : configuredBaseUrl.Trim();
+
+        if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out var parsedBaseUri))
+        {
+            throw new InvalidOperationException(
+                $"Invalid PLAYPAIR_SERVER_URL value: '{baseUrl}'. Expected absolute URL like https://playpair.example.com");
+        }
+
+        return new Uri(parsedBaseUri, "/hubs/room").ToString();
     }
 
     protected override void OnExit(ExitEventArgs e)

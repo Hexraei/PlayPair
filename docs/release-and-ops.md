@@ -20,6 +20,22 @@ Options:
    - Deploy behind a simple load balancer or serverless container host.
    - Use CI to create a GitHub Release with server artifact (see `.github/workflows/release.yml`).
 
+### Quick internet-facing deployment checklist (for friend testing)
+
+1. Deploy `src/PlayPair.Server/Dockerfile` to a public container host.
+2. Expose HTTP port `80` in container runtime (Dockerfile already sets `ASPNETCORE_URLS=http://+:80`).
+3. Verify endpoints:
+   - `GET /health`
+   - `GET /health/live`
+   - `GET /health/ready`
+4. Share the HTTPS base URL with testers.
+5. Each tester launches client with:
+
+```powershell
+$env:PLAYPAIR_SERVER_URL = "https://your-public-server-url"
+dotnet run --project .\src\PlayPair.Client.AppShell\PlayPair.Client.AppShell.csproj
+```
+
 2. VM-based:
    - Unzip the server artifact and run as a service (systemd on Linux, or a Windows service if applicable).
 

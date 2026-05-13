@@ -34,6 +34,17 @@ PlayPair is a Windows desktop application that allows two users to **watch media
 - Look for the PlayPair icon in your Windows system tray (bottom-right corner)
 - Click the icon to bring up the overlay menu
 
+### Connecting to a Cloud Backend
+
+If you're testing with a friend over the internet, point the client to your public server URL before launch:
+
+```powershell
+$env:PLAYPAIR_SERVER_URL = "https://your-public-server-url"
+dotnet run --project .\src\PlayPair.Client.AppShell\PlayPair.Client.AppShell.csproj
+```
+
+PlayPair will use `/hubs/room` on that base URL automatically.
+
 ---
 
 ## Usage Workflow
