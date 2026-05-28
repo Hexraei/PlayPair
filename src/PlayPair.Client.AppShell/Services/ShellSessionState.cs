@@ -1,3 +1,5 @@
+using PlayPair.Contracts.Models;
+
 namespace PlayPair.Client.AppShell.Services;
 
 public sealed record ShellSessionState(
@@ -5,4 +7,6 @@ public sealed record ShellSessionState(
     bool IsConnected,
     string MediaDetectionStatus,
     string SyncState,
-    bool IsInRoom);
+    bool IsInRoom,
+    SourceRole Role = SourceRole.GUEST);
+

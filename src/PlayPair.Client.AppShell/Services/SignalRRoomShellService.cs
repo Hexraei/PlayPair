@@ -31,7 +31,8 @@ public sealed class SignalRRoomShellService : IRoomShellService
             {
                 RoomCode = result.RoomCode,
                 IsConnected = true,
-                IsInRoom = true
+                IsInRoom = true,
+                Role = result.AssignedRole
             };
             return RoomOperationResult.Success(_state);
         }
@@ -51,7 +52,8 @@ public sealed class SignalRRoomShellService : IRoomShellService
             {
                 RoomCode = result.RoomCode,
                 IsConnected = true,
-                IsInRoom = true
+                IsInRoom = true,
+                Role = result.AssignedRole
             };
             return RoomOperationResult.Success(_state);
         }
@@ -72,7 +74,7 @@ public sealed class SignalRRoomShellService : IRoomShellService
         try
         {
             var result = await _client.ReconnectRoomAsync(_state.RoomCode, _client.ClientId, cancellationToken);
-            _state = _state with { IsConnected = true };
+            _state = _state with { IsConnected = true, Role = result.AssignedRole };
             return RoomOperationResult.Success(_state);
         }
         catch (Exception ex)

@@ -61,6 +61,25 @@ public partial class App : System.Windows.Application
             latencyTracker,
             errorHandler);
 
+        mediaSessionClient.StateChanged += (sender, args) =>
+        {
+            Dispatcher.Invoke(() =>
+            {
+                _viewModel.UpdateMediaState(args.State.Title, args.State.SourceAppId, args.State.PlaybackState.ToString());
+            });
+        };
+
+        playPairClient.SnapshotReceived += (sender, args) =>
+        {
+            var snapshot = args.Snapshot;
+            var hostName = snapshot.Participants.FirstOrDefault(p => p.Role == SourceRole.HOST)?.DisplayName ?? "Unknown";
+            var guestNames = snapshot.Participants.Where(p => p.Role == SourceRole.GUEST).Select(p => p.DisplayName).ToList();
+            Dispatcher.Invoke(() =>
+            {
+                _viewModel.UpdateParticipants(snapshot.Participants.Count, hostName, guestNames);
+            });
+        };
+
         _statusOverlayWindow = new StatusOverlayWindow
         {
             DataContext = _viewModel
@@ -140,10 +159,9 @@ public partial class App : System.Windows.Application
                     return;
                 }
 
-                // Determine the role (this would typically come from the room operation)
-                // For now, we'll default to GUEST and let the sync engine determine the actual role
+                // Start sync coordinator using the role set during room creation/join
                 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-                await _syncCoordinator.StartAsync(roomCode, "sync-client", SourceRole.GUEST, cts.Token);
+                await _syncCoordinator.StartAsync(roomCode, "sync-client", _viewModel.CurrentRole, cts.Token);
             }
             catch (Exception ex)
             {

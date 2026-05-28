@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using PlayPair.Client.AppShell.Services;
 using PlayPair.Client.AppShell.Errors;
+using PlayPair.Contracts.Models;
 
 namespace PlayPair.Client.AppShell.ViewModels;
 
@@ -24,6 +25,12 @@ public sealed class AppShellViewModel : ObservableObject
     private string? _errorMessage;
     private bool _isInRoom;
     private bool _isBusy;
+    private SourceRole _currentRole = SourceRole.GUEST;
+    private string _mediaTitle = "None";
+    private string _mediaApp = "None";
+    private string _playbackStateText = "Unknown";
+    private string _roomParticipantsStatus = "Waiting for participants...";
+    private string? _transientMessage;
 
     public AppShellViewModel(
         IRoomShellService roomShellService,
@@ -51,6 +58,7 @@ public sealed class AppShellViewModel : ObservableObject
         CopyRoomCodeCommand = new RelayCommand(async _ => await CopyRoomCodeAsync(), _ => !IsBusy);
         ReconnectCommand = new RelayCommand(async _ => await ReconnectAsync(), _ => !IsBusy);
         LeaveRoomCommand = new RelayCommand(async _ => await LeaveRoomAsync(), _ => !IsBusy);
+        ClearErrorCommand = new RelayCommand(_ => ClearError());
         ExitCommand = new RelayCommand(_ => ExitRequested?.Invoke(this, EventArgs.Empty));
     }
 
@@ -71,6 +79,8 @@ public sealed class AppShellViewModel : ObservableObject
     public ICommand ReconnectCommand { get; }
 
     public ICommand LeaveRoomCommand { get; }
+
+    public ICommand ClearErrorCommand { get; }
 
     public ICommand ExitCommand { get; }
 
@@ -111,6 +121,50 @@ public sealed class AppShellViewModel : ObservableObject
         get => _syncStateText;
         private set => SetProperty(ref _syncStateText, value);
     }
+
+    public SourceRole CurrentRole
+    {
+        get => _currentRole;
+        private set => SetProperty(ref _currentRole, value);
+    }
+
+    public string MediaTitle
+    {
+        get => _mediaTitle;
+        private set => SetProperty(ref _mediaTitle, value);
+    }
+
+    public string MediaApp
+    {
+        get => _mediaApp;
+        private set => SetProperty(ref _mediaApp, value);
+    }
+
+    public string PlaybackStateText
+    {
+        get => _playbackStateText;
+        private set => SetProperty(ref _playbackStateText, value);
+    }
+
+    public string RoomParticipantsStatus
+    {
+        get => _roomParticipantsStatus;
+        private set => SetProperty(ref _roomParticipantsStatus, value);
+    }
+
+    public string? TransientMessage
+    {
+        get => _transientMessage;
+        private set
+        {
+            if (SetProperty(ref _transientMessage, value))
+            {
+                OnPropertyChanged(nameof(HasTransientMessage));
+            }
+        }
+    }
+
+    public bool HasTransientMessage => !string.IsNullOrWhiteSpace(TransientMessage);
 
     public string JoinRoomCodeInput
     {
@@ -234,6 +288,11 @@ public sealed class AppShellViewModel : ObservableObject
         catch (Exception ex)
         {
             _logger.LogError(ex, "Shell action failed");
+            if (ex.ToString().Contains("connection_already_in_room"))
+            {
+                ShowTransientMessage("Already in a room.");
+                return;
+            }
             // Try to parse as hub exception if it has message payload
             if (ex.Message.StartsWith("{"))
             {
@@ -259,6 +318,28 @@ public sealed class AppShellViewModel : ObservableObject
         MediaDetectionStatusText = state.MediaDetectionStatus;
         SyncStateText = state.SyncState;
         IsInRoom = state.IsInRoom;
+        CurrentRole = state.Role;
+    }
+
+    public void UpdateMediaState(string title, string app, string stateText)
+    {
+        MediaTitle = string.IsNullOrWhiteSpace(title) ? "None" : title;
+        MediaApp = string.IsNullOrWhiteSpace(app) ? "None" : app;
+        PlaybackStateText = stateText;
+        MediaDetectionStatusText = $"{MediaApp} - {MediaTitle} ({PlaybackStateText})";
+    }
+
+    public void UpdateParticipants(int count, string hostName, IReadOnlyList<string> guestNames)
+    {
+        if (count <= 1)
+        {
+            RoomParticipantsStatus = $"Waiting for guest (Host: {hostName})";
+        }
+        else
+        {
+            RoomParticipantsStatus = $"Connected: {string.Join(", ", guestNames)} (Host: {hostName})";
+        }
+        SyncStateText = $"{count} participant(s) in room";
     }
 
     private void SetError(string message)
@@ -266,6 +347,12 @@ public sealed class AppShellViewModel : ObservableObject
         ErrorMessage = message;
         OnPropertyChanged(nameof(HasError));
         _notificationService.ShowError("PlayPair Error", message);
+    }
+
+    public void ClearError()
+    {
+        ErrorMessage = null;
+        OnPropertyChanged(nameof(HasError));
     }
 
     private void RaiseCommandCanExecuteChanged()
@@ -285,4 +372,18 @@ public sealed class AppShellViewModel : ObservableObject
             }
         }
     }
+
+    public void ShowTransientMessage(string message)
+    {
+        TransientMessage = message;
+        _ = Task.Run(async () =>
+        {
+            await Task.Delay(3000);
+            System.Windows.Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                TransientMessage = null;
+            });
+        });
+    }
 }
+
