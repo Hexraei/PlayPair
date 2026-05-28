@@ -149,6 +149,40 @@ public class InMemoryRoomManagerTests
         Assert.Contains("roomCode", error.Message, StringComparison.OrdinalIgnoreCase);
     }
 
+    [Fact]
+    public void CreateRoom_ReachesLimit_ThrowsException()
+    {
+        var manager = CreateManager();
+
+        // Create 1000 rooms
+        for (int i = 0; i < 1000; i++)
+        {
+            manager.CreateRoom($"conn-{i}", $"User {i}");
+        }
+
+        // The 1001st room creation should fail due to capacity limits
+        var error = Assert.Throws<RoomOperationException>(() => manager.CreateRoom("conn-extra", "Extra User"));
+        Assert.Equal("server_capacity_reached", error.Code);
+    }
+
+    [Fact]
+    public void ProcessCommand_GuestReadyCommand_IsAccepted()
+    {
+        var manager = CreateManager();
+        var host = manager.CreateRoom("conn-host", "Host");
+        var guest = manager.JoinRoom("conn-guest", host.RoomCode, "Guest");
+
+        var readyPayload = new { isReady = true };
+        var command = BuildCommand(host.RoomCode, guest.ClientId, SourceRole.GUEST, CommandType.READY, readyPayload);
+
+        var relay = manager.ProcessCommand("conn-guest", command);
+
+        Assert.Equal(CommandProcessStatus.Accepted, relay.Status);
+        Assert.NotNull(relay.Snapshot);
+        var guestParticipant = relay.Snapshot.Participants.Single(p => p.ClientId == guest.ClientId);
+        Assert.True(guestParticipant.IsReady);
+    }
+
     private static InMemoryRoomManager CreateManager()
         => new(LoggerFactory.CreateLogger<InMemoryRoomManager>());
 

@@ -10,6 +10,7 @@ public sealed partial class InMemoryRoomManager : IRoomManager
     private const int MaxParticipants = 2;
     private static readonly TimeSpan DisconnectRetentionWindow = TimeSpan.FromMinutes(2);
     private const int ProcessedCommandHistoryLimit = 256;
+    private const int MaxRoomsLimit = 1000;
 
     private readonly object _syncRoot = new();
     private readonly Dictionary<string, RoomState> _rooms = new(StringComparer.OrdinalIgnoreCase);
@@ -30,6 +31,11 @@ public sealed partial class InMemoryRoomManager : IRoomManager
         {
             PruneExpiredDisconnectedParticipantsLocked();
             EnsureConnectionNotAlreadyInRoom(connectionId);
+
+            if (_rooms.Count >= MaxRoomsLimit)
+            {
+                throw new RoomOperationException("Server room capacity reached.", "server_capacity_reached");
+            }
 
             var roomCode = CreateUniqueRoomCode();
             var participant = ParticipantState.CreateConnected(connectionId, displayName, SourceRole.HOST);
@@ -304,7 +310,7 @@ public sealed partial class InMemoryRoomManager : IRoomManager
                     null);
             }
 
-            if (IsMutatingCommand(command.Type) && participant.Role != SourceRole.HOST)
+            if (IsMutatingCommand(command.Type) && command.Type != CommandType.READY && participant.Role != SourceRole.HOST)
             {
                 throw new RoomOperationException("Only host can mutate room state for this command.", "host_required");
             }

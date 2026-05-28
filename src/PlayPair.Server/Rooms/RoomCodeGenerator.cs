@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace PlayPair.Server.Rooms;
 
 public static class RoomCodeGenerator
@@ -7,12 +9,12 @@ public static class RoomCodeGenerator
 
     public static string CreateCode()
     {
-        Span<char> chars = stackalloc char[RoomCodeLength];
-        for (var index = 0; index < chars.Length; index++)
+        return string.Create(RoomCodeLength, Alphabet, (span, alphabetState) =>
         {
-            chars[index] = Alphabet[Random.Shared.Next(Alphabet.Length)];
-        }
-
-        return new string(chars);
+            for (var index = 0; index < span.Length; index++)
+            {
+                span[index] = alphabetState[RandomNumberGenerator.GetInt32(alphabetState.Length)];
+            }
+        });
     }
 }
