@@ -19,6 +19,7 @@ public partial class App : System.Windows.Application
     private StatusOverlayWindow? _statusOverlayWindow;
     private AppShellViewModel? _viewModel;
     private SyncCoordinator? _syncCoordinator;
+    private PlayPairClient? _playPairClient;
     private bool _isExiting;
 
     protected override void OnStartup(StartupEventArgs e)
@@ -35,17 +36,17 @@ public partial class App : System.Windows.Application
 
         var hubUrl = ResolveRoomHubUrl();
         var clientLogger = _loggerFactory.CreateLogger<PlayPairClient>();
-        var playPairClient = new PlayPairClient(hubUrl, clientLogger);
+        _playPairClient = new PlayPairClient(hubUrl, clientLogger);
         
         // Initialize media session and sync coordinator
         var mediaSessionClient = new MediaSessionClient(_loggerFactory.CreateLogger<MediaSessionClient>());
         _syncCoordinator = new SyncCoordinator(
             mediaSessionClient,
-            playPairClient,
+            _playPairClient,
             _loggerFactory.CreateLogger<SyncCoordinator>(),
             _loggerFactory);
         
-        var roomService = new SignalRRoomShellService(playPairClient, _loggerFactory.CreateLogger<SignalRRoomShellService>());
+        var roomService = new SignalRRoomShellService(_playPairClient, _loggerFactory.CreateLogger<SignalRRoomShellService>());
         var clipboardService = new WindowsClipboardService();
         var notificationService = new WindowsUserNotificationService();
         
@@ -69,7 +70,7 @@ public partial class App : System.Windows.Application
             });
         };
 
-        playPairClient.SnapshotReceived += (sender, args) =>
+        _playPairClient.SnapshotReceived += (sender, args) =>
         {
             var snapshot = args.Snapshot;
             var hostName = snapshot.Participants.FirstOrDefault(p => p.Role == SourceRole.HOST)?.DisplayName ?? "Unknown";
@@ -179,7 +180,8 @@ public partial class App : System.Windows.Application
 
                 // Start sync coordinator using the role set during room creation/join
                 var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-                await _syncCoordinator.StartAsync(roomCode, "sync-client", _viewModel.CurrentRole, cts.Token);
+                var clientId = _playPairClient?.ClientId ?? "sync-client";
+                await _syncCoordinator.StartAsync(roomCode, clientId, _viewModel.CurrentRole, cts.Token);
             }
             catch (Exception ex)
             {
