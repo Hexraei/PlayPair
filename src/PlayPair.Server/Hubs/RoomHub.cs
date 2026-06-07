@@ -26,6 +26,7 @@ public sealed class RoomHub : Hub
             () => _roomManager.CreateRoom(Context.ConnectionId, displayName),
             "CreateRoom");
 
+        _logger.LogInformation("RoomCreated: RoomCode={RoomCode}, HostClientId={ClientId}, ConnectionId={ConnectionId}", result.RoomCode, result.ClientId, Context.ConnectionId);
         _telemetry.RoomJoined();
         return JoinSignalRGroupAndPublishSnapshotAsync(result);
     }
@@ -37,6 +38,7 @@ public sealed class RoomHub : Hub
             () => _roomManager.JoinRoom(Context.ConnectionId, roomCode, displayName),
             "JoinRoom");
 
+        _logger.LogInformation("RoomJoined: RoomCode={RoomCode}, GuestClientId={ClientId}, ConnectionId={ConnectionId}", result.RoomCode, result.ClientId, Context.ConnectionId);
         _telemetry.RoomJoined();
         return JoinSignalRGroupAndPublishSnapshotAsync(result);
     }
@@ -48,6 +50,7 @@ public sealed class RoomHub : Hub
             () => _roomManager.Reconnect(Context.ConnectionId, roomCode, clientId),
             "ReconnectRoom");
 
+        _logger.LogInformation("ClientReconnected: RoomCode={RoomCode}, ClientId={ClientId}, ConnectionId={ConnectionId}", result.RoomCode, result.ClientId, Context.ConnectionId);
         _telemetry.Reconnected();
         return JoinSignalRGroupAndPublishSnapshotAsync(result);
     }
@@ -55,6 +58,7 @@ public sealed class RoomHub : Hub
     public Task<RoomSnapshot> RecoverState(string roomCode, string clientId)
     {
         using var _ = BeginOperationScope("RecoverState", correlationId: Context.ConnectionId, roomCode: roomCode, clientId: clientId);
+        _logger.LogInformation("StateRecoveryRequested: RoomCode={RoomCode}, ClientId={ClientId}, ConnectionId={ConnectionId}", roomCode, clientId, Context.ConnectionId);
         return Task.FromResult(ExecuteOrThrow(
             () => _roomManager.RecoverState(Context.ConnectionId, roomCode, clientId),
             "RecoverState"));
@@ -67,6 +71,7 @@ public sealed class RoomHub : Hub
             () => _roomManager.LeaveRoom(Context.ConnectionId),
             "LeaveRoom");
 
+        _logger.LogInformation("ClientLeftRoom: RoomCode={RoomCode}, ConnectionId={ConnectionId}", result.RoomCode, Context.ConnectionId);
         _telemetry.RoomLeft();
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, result.RoomCode);
         if (!result.RoomClosed && result.Snapshot is not null)
@@ -101,10 +106,12 @@ public sealed class RoomHub : Hub
 
         if (relay.Status == CommandProcessStatus.Duplicate)
         {
+            _logger.LogInformation("SendCommandDuplicateRejected: RoomCode={RoomCode}, ClientId={ClientId}, CommandType={CommandType}, CommandId={CommandId}", command.RoomId, command.SourceClientId, command.Type, command.CommandId);
             _telemetry.CommandDuplicate();
             return new CommandSubmissionResult("duplicate", relay.RoomCode, relay.Command.CommandId, null);
         }
 
+        _logger.LogInformation("SendCommandAccepted: RoomCode={RoomCode}, ClientId={ClientId}, CommandType={CommandType}, CommandId={CommandId}", command.RoomId, command.SourceClientId, command.Type, command.CommandId);
         await Clients.Group(relay.RoomCode).SendAsync("CommandRelayed", relay.Command);
         if (relay.Snapshot is not null)
         {
@@ -117,9 +124,11 @@ public sealed class RoomHub : Hub
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
+        _logger.LogInformation("ConnectionDisconnected: ConnectionId={ConnectionId}, Exception={Exception}", Context.ConnectionId, exception?.Message ?? "none");
         var leftRoom = _roomManager.MarkDisconnected(Context.ConnectionId);
         if (leftRoom is not null)
         {
+            _logger.LogInformation("ClientDisconnectedCleanUp: RoomCode={RoomCode}, ConnectionId={ConnectionId}", leftRoom.RoomCode, Context.ConnectionId);
             _telemetry.RoomLeft();
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, leftRoom.RoomCode);
             if (!leftRoom.RoomClosed && leftRoom.Snapshot is not null)

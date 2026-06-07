@@ -162,6 +162,7 @@ public sealed class ClientSyncEngine : IAsyncDisposable
                     if (!result.Succeeded)
                     {
                         _logger.LogWarning("RemoteIntentApplyFailed {Code} {Message}", result.Code, result.Message);
+                        _ = ScheduleSnapshotRecoveryAsync(_state.Context.RoomId, cancellationToken);
                     }
                 }
             }
@@ -237,6 +238,36 @@ public sealed class ClientSyncEngine : IAsyncDisposable
         catch (Exception ex)
         {
             _logger.LogError(ex, "SnapshotRequestFailed {RoomId}", roomId);
+        }
+    }
+
+    private async Task ScheduleSnapshotRecoveryAsync(string roomId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(500, cancellationToken);
+            await _gate.WaitAsync(cancellationToken);
+            try
+            {
+                if (!_started || _state is null || _state.Context.RoomId != roomId)
+                {
+                    return;
+                }
+                _logger.LogInformation("Attempting snapshot recovery after remote command intent application failure for room {RoomId}", roomId);
+                await RequestAndApplySnapshotAsync(roomId, cancellationToken);
+            }
+            finally
+            {
+                _gate.Release();
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected when the cancellation token is cancelled
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "SnapshotRecoveryFailed {RoomId}", roomId);
         }
     }
 
