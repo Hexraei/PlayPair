@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -30,5 +31,18 @@ public partial class StatusOverlayWindow : Window
         e.Cancel = true;
         Hide();
         RequestCloseToTray?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+        {
+            DragMove();
+        }
+    }
+
+    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    {
+        Close(); // This will trigger OnClosing which hides the window to tray safely
     }
 }

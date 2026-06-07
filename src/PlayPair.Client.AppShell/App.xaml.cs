@@ -110,7 +110,25 @@ public partial class App : System.Windows.Application
 
     private static string ResolveRoomHubUrl()
     {
-        const string defaultBaseUrl = "http://localhost:5000";
+        string defaultBaseUrl = "https://playpair-server.onrender.com";
+
+        try
+        {
+            string configPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.txt");
+            if (System.IO.File.Exists(configPath))
+            {
+                string content = System.IO.File.ReadAllText(configPath).Trim();
+                if (!string.IsNullOrWhiteSpace(content))
+                {
+                    defaultBaseUrl = content;
+                }
+            }
+        }
+        catch
+        {
+            // Ignore any issues reading local config file
+        }
+
         var configuredBaseUrl = Environment.GetEnvironmentVariable("PLAYPAIR_SERVER_URL");
         var baseUrl = string.IsNullOrWhiteSpace(configuredBaseUrl) ? defaultBaseUrl : configuredBaseUrl.Trim();
 

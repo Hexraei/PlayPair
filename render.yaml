@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: playpair-server
+    env: docker
+    dockerContext: .
+    dockerfilePath: src/PlayPair.Server/Dockerfile
+    plan: free
+    healthCheckPath: /health

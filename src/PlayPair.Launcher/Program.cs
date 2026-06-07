@@ -11,6 +11,9 @@ class Program
         Console.WriteLine("       PlayPair Launcher Service        ");
         Console.WriteLine("========================================");
 
+        // Set the environment variable for child processes to inherit
+        Environment.SetEnvironmentVariable("PLAYPAIR_SERVER_URL", "http://localhost:5000");
+
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
         // In case it's run from the launcher's bin folder, find the repository root
         string repoRoot = baseDir;
@@ -104,14 +107,12 @@ class Program
         if (clientPath != null)
         {
             Console.WriteLine($"Starting Client Executable: {clientPath}");
-            var psi = new ProcessStartInfo
+            clientProcess = Process.Start(new ProcessStartInfo
             {
                 FileName = clientPath,
                 WorkingDirectory = Path.GetDirectoryName(clientPath),
                 UseShellExecute = true
-            };
-            psi.EnvironmentVariables["PLAYPAIR_SERVER_URL"] = "http://localhost:5000";
-            clientProcess = Process.Start(psi);
+            });
         }
         else
         {
@@ -119,15 +120,13 @@ class Program
             if (File.Exists(clientProj))
             {
                 Console.WriteLine("Starting Client via 'dotnet run'...");
-                var psi = new ProcessStartInfo
+                clientProcess = Process.Start(new ProcessStartInfo
                 {
                     FileName = "dotnet",
                     Arguments = $"run --project \"{clientProj}\"",
                     WorkingDirectory = repoRoot,
                     UseShellExecute = true
-                };
-                psi.EnvironmentVariables["PLAYPAIR_SERVER_URL"] = "http://localhost:5000";
-                clientProcess = Process.Start(psi);
+                });
             }
             else
             {

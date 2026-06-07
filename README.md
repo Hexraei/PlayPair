@@ -25,18 +25,29 @@ dotnet build PlayPair.sln --configuration Release --no-restore
 dotnet test PlayPair.sln --configuration Release --no-build
 ```
 
-## Cloud test with a friend
+## Cloud Deployment (Render.com)
 
-1. Deploy the server container (`src/PlayPair.Server/Dockerfile`) to any public host (Render/Railway/Fly.io/Azure Container Apps).
-2. Ensure the server is reachable over HTTPS and `/health` returns `200`.
-3. On each Windows client machine, set the backend base URL before launching the app:
+We have configured a Render Blueprint (`render.yaml`) to make cloud deployment simple.
+
+1. **Push Code**: Push this codebase to your own GitHub repository.
+2. **Deploy on Render**:
+   - Go to [Render Blueprints](https://dashboard.render.com/blueprints).
+   - Click **New Blueprint Instance**.
+   - Connect your GitHub repository.
+   - Render will automatically read the `render.yaml` file and configure the Web Service to build using `src/PlayPair.Server/Dockerfile`.
+   - Click **Approve** to start the build and deployment.
+3. **Verify Health**: Once deployed, navigate to your public Render URL (e.g. `https://your-app-name.onrender.com/health`) in your browser to verify it returns `status: "ok"`.
+
+## Connecting Standalone Client
+
+Once the cloud server is live, start the standalone Windows client:
 
 ```powershell
-$env:PLAYPAIR_SERVER_URL = "https://your-public-server-url"
-dotnet run --project .\src\PlayPair.Client.AppShell\PlayPair.Client.AppShell.csproj
+$env:PLAYPAIR_SERVER_URL = "https://your-app-name.onrender.com"
+.\dist\PlayPair.exe
 ```
 
-The app automatically uses `${PLAYPAIR_SERVER_URL}/hubs/room` for SignalR.
+The application will automatically connect to `${PLAYPAIR_SERVER_URL}/hubs/room`.
 
 ## Documentation
 

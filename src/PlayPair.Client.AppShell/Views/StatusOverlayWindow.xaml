@@ -5,30 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="PlayPair Hub"
-        Width="380"
-        Height="500"
-        MinWidth="350"
-        MinHeight="460"
+        Width="320"
+        Height="470"
+        WindowStyle="None"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Background="#0D0E11"
-        Foreground="#ECEEF2"
-        ResizeMode="CanResizeWithGrip"
+        Background="#111113"
+        BorderBrush="#27272A"
+        BorderThickness="1"
+        UseLayoutRounding="True"
         TextOptions.TextFormattingMode="Display"
         TextOptions.TextRenderingMode="ClearType"
-        UseLayoutRounding="True"
+        FontFamily="DM Sans, Century Gothic, Segoe UI"
+        MouseDown="Window_MouseDown"
         AutomationProperties.Name="PlayPair status overlay">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         
-        <!-- Modern Minimalist Button Style -->
+        <!-- Premium Modern Button Style -->
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#1D1F26" />
-            <Setter Property="Foreground" Value="#ECEEF2" />
+            <Setter Property="Background" Value="#1E1E22" />
+            <Setter Property="Foreground" Value="#D4D4D8" />
+            <Setter Property="FontFamily" Value="DM Sans, Century Gothic, Segoe UI" />
+            <Setter Property="FontSize" Value="13" />
             <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="Padding" Value="10,4" />
-            <Setter Property="BorderBrush" Value="#22242B" />
+            <Setter Property="Padding" Value="12,4" />
+            <Setter Property="BorderBrush" Value="#27272A" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Height" Value="28" />
+            <Setter Property="Height" Value="34" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -36,7 +40,7 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="2"
+                                CornerRadius="8"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
@@ -45,48 +49,81 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#252831" />
-                    <Setter Property="BorderBrush" Value="#2C2F3A" />
+                    <Setter Property="Background" Value="#27272A" />
+                    <Setter Property="BorderBrush" Value="#3F3F46" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="#111215" />
-                    <Setter Property="Foreground" Value="#575758" />
-                    <Setter Property="BorderBrush" Value="#18191E" />
+                    <Setter Property="Background" Value="#141416" />
+                    <Setter Property="Foreground" Value="#3F3F46" />
+                    <Setter Property="BorderBrush" Value="#1E1E22" />
                 </Trigger>
             </Style.Triggers>
         </Style>
 
-        <!-- Secondary Button Style -->
-        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Background" Value="#15161A" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1D1F26" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Danger Button Style -->
+        <!-- Danger/Leave Button Style -->
         <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Background" Value="#2A1B1B" />
-            <Setter Property="BorderBrush" Value="#4A2222" />
-            <Setter Property="Foreground" Value="#FCA5A5" />
+            <Setter Property="Background" Value="#2D1A1A" />
+            <Setter Property="BorderBrush" Value="#4C1F1F" />
+            <Setter Property="Foreground" Value="#F87171" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#3D2424" />
-                    <Setter Property="BorderBrush" Value="#5D2B2B" />
+                    <Setter Property="Background" Value="#4C1F1F" />
+                    <Setter Property="BorderBrush" Value="#7F1D1D" />
+                    <Setter Property="Foreground" Value="#FEF2F2" />
                 </Trigger>
             </Style.Triggers>
         </Style>
 
-        <!-- TextBox Style -->
+        <!-- Accent/Join Button Style -->
+        <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#5B6CF9" />
+            <Setter Property="BorderBrush" Value="#5B6CF9" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4655D6" />
+                    <Setter Property="BorderBrush" Value="#4655D6" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Reconnect/Icon Button Style -->
+        <Style x:Key="IconButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#71717A" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Modern TextBox Style -->
         <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#15161A" />
-            <Setter Property="Foreground" Value="#ECEEF2" />
-            <Setter Property="CaretBrush" Value="#ECEEF2" />
-            <Setter Property="BorderBrush" Value="#22242B" />
+            <Setter Property="Background" Value="#1E1E22" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="CaretBrush" Value="#FFFFFF" />
+            <Setter Property="BorderBrush" Value="#27272A" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Padding" Value="6,3" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="FontFamily" Value="DM Mono, Cascadia Code, Consolas" />
+            <Setter Property="FontSize" Value="13" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -94,7 +131,7 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="2">
+                                CornerRadius="8">
                             <ScrollViewer x:Name="PART_ContentHost" />
                         </Border>
                     </ControlTemplate>
@@ -103,275 +140,259 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="16">
+    <Grid Margin="18">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /> <!-- Header -->
-            <RowDefinition Height="*" />    <!-- Content Area -->
-            <RowDefinition Height="Auto" /> <!-- Actions / Join -->
-            <RowDefinition Height="Auto" /> <!-- Error Display -->
+            <RowDefinition Height="Auto" /> <!-- Error/Notification Area (Stackable) -->
+            <RowDefinition Height="*" />    <!-- Content Area (Scrollable if needed, but fixed layout) -->
+            <RowDefinition Height="Auto" /> <!-- Actions Section -->
             <RowDefinition Height="Auto" /> <!-- Footer -->
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Grid Grid.Row="0" Margin="0,0,0,14">
+        <Grid Grid.Row="0" Margin="0,0,0,16">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="PlayPair" FontSize="18" FontWeight="Bold" Foreground="#ECEEF2" />
-                <Border Background="#202229" 
-                        BorderBrush="#2C2F3A" 
-                        BorderThickness="1" 
-                        CornerRadius="2" 
-                        Padding="6,2" 
-                        Margin="8,0,0,0" 
+                <TextBlock Text="PlayPair" FontSize="14" FontWeight="SemiBold" Foreground="#A1A1AA" VerticalAlignment="Center" />
+                
+                <!-- Role Indicator Badge -->
+                <Border Margin="8,0,0,0"
+                        Background="#1E1E22"
+                        BorderBrush="#27272A"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="6,2"
                         VerticalAlignment="Center">
-                    <TextBlock Text="{Binding CurrentRole}" 
-                               FontWeight="SemiBold" 
-                               FontSize="10" 
-                               Foreground="#A9B2C3" />
+                    <TextBlock Text="{Binding CurrentRole}"
+                               FontWeight="SemiBold"
+                               FontSize="9"
+                               Foreground="#71717A" />
                 </Border>
             </StackPanel>
-            <TextBlock Text="Watch in Sync" FontSize="11" Foreground="#7E8494" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <!-- Connection Dot -->
+                <Ellipse x:Name="ConnectionDot" Width="6" Height="6" Margin="0,0,6,0" VerticalAlignment="Center">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Fill" Value="#71717A" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                    <Setter Property="Fill" Value="#3ED97A" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                    <Setter Property="Fill" Value="#EF4444" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+                <TextBlock Text="{Binding ConnectedStatusText}" FontSize="12" Foreground="#71717A" VerticalAlignment="Center" />
+            </StackPanel>
         </Grid>
 
+        <!-- Error & Notification Stack -->
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,12">
+            <!-- Error Banner -->
+            <Border Background="#2D1A1A"
+                    BorderBrush="#4C1F1F"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="10,8"
+                    Margin="0,0,0,8"
+                    Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Text="{Binding ErrorMessage}"
+                               Foreground="#F87171"
+                               FontSize="11.5"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center"
+                               Padding="0,0,12,0" />
+                    <Button Grid.Column="1"
+                            Style="{StaticResource IconButton}"
+                            Command="{Binding ClearErrorCommand}"
+                            Content="×"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Width="16" Height="16"
+                            VerticalAlignment="Top" />
+                </Grid>
+            </Border>
+
+            <!-- Transient Toast Messages -->
+            <Border Background="#1C1D24"
+                    BorderBrush="#2B2D38"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="10,8"
+                    Margin="0,0,0,8"
+                    Visibility="{Binding HasTransientMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="ℹ " Foreground="#7C8FFF" FontWeight="Bold" FontSize="11" />
+                    <TextBlock Text="{Binding TransientMessage}"
+                               Foreground="#ECEEF2"
+                               FontSize="11.5"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
         <!-- Main Content Area -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,14">
-            <StackPanel Orientation="Vertical">
-                
-                <!-- Room Info Card -->
-                <Border Background="#15161A" BorderBrush="#22242B" BorderThickness="1" CornerRadius="2" Padding="12" Margin="0,0,0,10">
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <!-- Room Code Card -->
+            <Border Background="#141416"
+                    BorderBrush="#27272A"
+                    BorderThickness="0.5"
+                    CornerRadius="10"
+                    Padding="16,14"
+                    Margin="0,0,0,12">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="ROOM CODE" FontSize="9.5" FontWeight="SemiBold" Foreground="#71717A" Margin="0,0,0,4" />
+                        <TextBlock Text="{Binding CurrentRoomCode, TargetNullValue=------}"
+                                   FontFamily="DM Mono, Cascadia Code, Consolas"
+                                   FontSize="24"
+                                   FontWeight="Medium"
+                                   Foreground="#7C8FFF"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    <Button Style="{StaticResource IconButton}"
+                            Command="{Binding CopyRoomCodeCommand}"
+                            Content="📋"
+                            FontSize="14"
+                            Width="30" Height="30"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            ToolTip="Copy Code" />
+                </Grid>
+            </Border>
+
+            <!-- Now Playing Card -->
+            <Border Background="#141416"
+                    BorderBrush="#27272A"
+                    BorderThickness="0.5"
+                    CornerRadius="10"
+                    Padding="16,14"
+                    Margin="0,0,0,12">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="NOW PLAYING" FontSize="9.5" FontWeight="SemiBold" Foreground="#71717A" Margin="0,0,0,8" />
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Room Code -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="ROOM CODE" FontSize="9" FontWeight="Bold" Foreground="#7E8494" VerticalAlignment="Center"/>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding CurrentRoomCode, TargetNullValue=Not connected}" 
-                                       FontSize="13" 
-                                       FontWeight="Bold" 
-                                       Foreground="#5294E2"
-                                       Margin="0,0,8,0"
-                                       VerticalAlignment="Center"
-                                       AutomationProperties.Name="Current room code value" />
-                            <Button Style="{StaticResource SecondaryButton}" 
-                                    Command="{Binding CopyRoomCodeCommand}" 
-                                    Content="Copy" 
-                                    Height="20" 
-                                    Padding="6,1"
-                                    FontSize="10"
-                                    AutomationProperties.Name="Copy active room code action" />
+                        <Border Grid.Column="0" Background="#1E1E22" BorderBrush="#27272A" BorderThickness="0.5" Width="36" Height="36" CornerRadius="18" Margin="0,0,12,0">
+                            <TextBlock Text="▶" Foreground="#71717A" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" />
+                        </Border>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding MediaTitle, TargetNullValue=No Media Detected}"
+                                       FontWeight="Medium"
+                                       FontSize="13"
+                                       Foreground="#FFFFFF"
+                                       TextTrimming="CharacterEllipsis" />
+                            
+                            <!-- Process name (visible to local player only in their UI dashboard) -->
+                            <TextBlock Text="{Binding MediaApp, TargetNullValue=Idle}"
+                                       FontSize="11.5"
+                                       Foreground="#71717A"
+                                       Margin="0,2,0,0"
+                                       TextTrimming="CharacterEllipsis" />
                         </StackPanel>
-
-                        <!-- Connection Status -->
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="CONNECTION" FontSize="9" FontWeight="Bold" Foreground="#7E8494" Margin="0,10,0,0" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" 
-                                   Text="{Binding ConnectedStatusText}" 
-                                   FontWeight="SemiBold" 
-                                   Foreground="#10B981" 
-                                   HorizontalAlignment="Right"
-                                   Margin="0,10,0,0"
-                                   VerticalAlignment="Center"
-                                   AutomationProperties.Name="Current connection status value" />
-
-                        <!-- Sync Status -->
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="SYNC STATUS" FontSize="9" FontWeight="Bold" Foreground="#7E8494" Margin="0,10,0,0" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" 
-                                   Text="{Binding SyncStateText}" 
-                                   Foreground="#ECEEF2" 
-                                   HorizontalAlignment="Right"
-                                   Margin="0,10,0,0"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   AutomationProperties.Name="Sync state placeholder value" />
                     </Grid>
-                </Border>
+                </StackPanel>
+            </Border>
 
-                <!-- Media Widget Card -->
-                <Border Background="#15161A" BorderBrush="#22242B" BorderThickness="1" CornerRadius="2" Padding="12" Margin="0,0,0,10">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="NOW PLAYING" FontSize="9" FontWeight="Bold" Foreground="#7E8494" Margin="0,0,0,8"/>
-                        
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Media Accent Icon -->
-                            <Border Grid.Column="0" Background="#22242B" Width="32" Height="32" CornerRadius="2" Margin="0,0,10,0">
-                                <TextBlock Text="▶" Foreground="#5294E2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" />
-                            </Border>
-
-                            <!-- Media Info -->
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding MediaTitle, TargetNullValue=No Media Detected}" 
-                                           FontWeight="Bold" 
-                                           FontSize="13" 
-                                           Foreground="#ECEEF2" />
-                                <TextBlock Text="{Binding MediaApp, TargetNullValue=Idle}" 
-                                           FontSize="11" 
-                                           Foreground="#7E8494" 
-                                           Margin="0,1,0,0" />
-                            </StackPanel>
-                        </Grid>
-
-                        <Border Height="1" Background="#22242B" Margin="0,10,0,10" />
-
-                        <!-- Playback State -->
-                        <DockPanel>
-                            <TextBlock DockPanel.Dock="Left" Text="Playback State" FontSize="11" Foreground="#7E8494" />
-                            <TextBlock DockPanel.Dock="Right" 
-                                       Text="{Binding PlaybackStateText, TargetNullValue=Unknown}" 
-                                       FontWeight="SemiBold" 
-                                       Foreground="#5294E2"
-                                       AutomationProperties.Name="Media detection placeholder value" />
-                        </DockPanel>
-                    </StackPanel>
-                </Border>
-
-                <!-- Room Participants Card -->
-                <Border Background="#15161A" BorderBrush="#22242B" BorderThickness="1" CornerRadius="2" Padding="12">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="PEOPLE IN ROOM" FontSize="9" FontWeight="Bold" Foreground="#7E8494" Margin="0,0,0,4"/>
-                        <TextBlock Text="{Binding RoomParticipantsStatus}" 
-                                   FontSize="11" 
-                                   Foreground="#ECEEF2" 
+            <!-- People in Room Card -->
+            <Border Background="#141416"
+                    BorderBrush="#27272A"
+                    BorderThickness="0.5"
+                    CornerRadius="10"
+                    Padding="16,12">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="PEOPLE IN ROOM" FontSize="9.5" FontWeight="SemiBold" Foreground="#71717A" Margin="0,0,0,6" />
+                    
+                    <ScrollViewer MaxHeight="45" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <TextBlock Text="{Binding RoomParticipantsStatus}"
+                                   FontSize="12"
+                                   Foreground="#A1A1AA"
                                    TextWrapping="Wrap" />
-                    </StackPanel>
-                </Border>
-
-            </StackPanel>
-        </ScrollViewer>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+        </StackPanel>
 
         <!-- Actions / Joining Section -->
-        <Border Grid.Row="2" Background="#15161A" BorderBrush="#22242B" BorderThickness="1" CornerRadius="2" Padding="12" Margin="0,0,0,10">
-            <StackPanel Orientation="Vertical">
+        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,12,0,8">
+            <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 
-                <!-- Main Actions -->
-                <Grid Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <Button Grid.Column="0" 
-                            Margin="0,0,4,0" 
-                            Command="{Binding CreateRoomCommand}" 
-                            Content="Create Room"
-                            AutomationProperties.Name="Create room action" />
-                    
-                    <Button Grid.Column="1" 
-                            Style="{StaticResource DangerButton}" 
-                            Margin="4,0,0,0" 
-                            Command="{Binding LeaveRoomCommand}" 
-                            Content="Leave Room"
-                            AutomationProperties.Name="Leave room action" />
-                </Grid>
+                <Button Grid.Column="0"
+                        Margin="0,0,4,0"
+                        Command="{Binding CreateRoomCommand}"
+                        Content="New Room" />
+                
+                <Button Grid.Column="1"
+                        Style="{StaticResource DangerButton}"
+                        Margin="4,0,0,0"
+                        Command="{Binding LeaveRoomCommand}"
+                        Content="Leave" />
+            </Grid>
 
-                <Border Height="1" Background="#22242B" Margin="0,0,0,10" />
-
-                <!-- Join Section -->
-                <DockPanel>
-                    <Label Content="Join Code:" Foreground="#7E8494" VerticalAlignment="Center" Margin="0,0,6,0" Padding="0" Target="{Binding ElementName=JoinRoomCodeTextBox}"/>
-                    <Button DockPanel.Dock="Right" 
-                            Command="{Binding JoinRoomCommand}" 
-                            Content="Join" 
-                            Width="60"
-                            AutomationProperties.Name="Join room action" />
-                    <TextBox x:Name="JoinRoomCodeTextBox" 
-                             Margin="0,0,6,0"
-                             MaxLength="6"
-                             CharacterCasing="Upper"
-                             Text="{Binding JoinRoomCodeInput, UpdateSourceTrigger=PropertyChanged}"
-                             AutomationProperties.Name="Room code input for joining a room" />
-                </DockPanel>
-
-                <!-- Reconnect -->
-                <Button Margin="0,6,0,0" 
-                        Style="{StaticResource SecondaryButton}" 
-                        Command="{Binding ReconnectCommand}" 
-                        Content="Reconnect to Server"
-                        AutomationProperties.Name="Reconnect action" />
-            </StackPanel>
-        </Border>
-
-        <!-- Error Banner -->
-        <Border Grid.Row="3"
-                Background="#2A1B1B"
-                BorderBrush="#4A2222"
-                BorderThickness="1"
-                CornerRadius="2"
-                Padding="8"
-                Margin="0,0,0,10"
-                Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <!-- Join Section -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Column="0"
-                           Text="{Binding ErrorMessage}"
-                           Foreground="#FCA5A5"
-                           TextWrapping="Wrap"
-                           VerticalAlignment="Center"
-                           Padding="0,0,16,0"
-                           AutomationProperties.Name="Error message region" />
+                <TextBox Grid.Column="0"
+                         x:Name="JoinRoomCodeTextBox"
+                         Margin="0,0,6,0"
+                         MaxLength="6"
+                         CharacterCasing="Upper"
+                         Text="{Binding JoinRoomCodeInput, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="12,6"
+                         Height="34"
+                         VerticalContentAlignment="Center"
+                         AutomationProperties.Name="Room code input" />
                 
                 <Button Grid.Column="1"
-                        Style="{StaticResource SecondaryButton}"
-                        Command="{Binding ClearErrorCommand}"
-                        Content="×"
-                        Width="18"
-                        Height="18"
-                        Padding="0"
-                        FontSize="11"
-                        FontWeight="Bold"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Right"
-                        AutomationProperties.Name="Dismiss error log action" />
+                        Style="{StaticResource AccentButton}"
+                        Command="{Binding JoinRoomCommand}"
+                        Content="Join"
+                        Width="70" />
             </Grid>
-        </Border>
-
-        <!-- Transient Notification Banner -->
-        <Border Grid.Row="3"
-                Background="#1C1D24"
-                BorderBrush="#2B2D38"
-                BorderThickness="1"
-                CornerRadius="2"
-                Padding="8"
-                Margin="0,0,0,10"
-                Visibility="{Binding HasTransientMessage, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="ℹ " Foreground="#5294E2" FontWeight="Bold" />
-                <TextBlock Text="{Binding TransientMessage}"
-                           Foreground="#ECEEF2"
-                           FontWeight="Medium"
-                           TextWrapping="Wrap" />
-            </StackPanel>
-        </Border>
+        </StackPanel>
 
         <!-- Footer -->
-        <DockPanel Grid.Row="4">
-            <TextBlock DockPanel.Dock="Left"
-                       VerticalAlignment="Center"
-                       Text="PlayPair Dashboard"
-                       Foreground="#575758"
-                       FontSize="10"
-                       AutomationProperties.Name="Footer product text" />
-            <Button DockPanel.Dock="Right"
-                    Style="{StaticResource SecondaryButton}"
-                    Width="70"
-                    Height="24"
-                    Command="{Binding ExitCommand}"
-                    Content="Exit"
-                    AutomationProperties.Name="Exit application action" />
-        </DockPanel>
+        <Grid Grid.Row="4" Margin="0,4,0,0">
+            <!-- Reconnect Refresh Button -->
+            <Button Style="{StaticResource IconButton}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding ReconnectCommand}"
+                    Content="↻"
+                    FontSize="16"
+                    Width="24" Height="20"
+                    ToolTip="Reconnect to Server" />
+            
+            <Button HorizontalAlignment="Right"
+                    Style="{StaticResource IconButton}"
+                    Click="CloseButton_Click"
+                    Content="Close"
+                    FontSize="11"
+                    Foreground="#71717A"
+                    Width="45" Height="20"
+                    ToolTip="Close to System Tray" />
+        </Grid>
     </Grid>
 </Window>

@@ -51,7 +51,23 @@ public sealed class WindowsTrayIconHost(ILogger<WindowsTrayIconHost> logger) : I
         _reconnectMenuItem.Click += (_, _) => ReconnectClicked?.Invoke(this, EventArgs.Empty);
         _exitMenuItem.Click += (_, _) => ExitClicked?.Invoke(this, EventArgs.Empty);
 
-        _notifyIcon.Icon = SystemIcons.Application;
+        try
+        {
+            var exePath = Environment.ProcessPath;
+            if (!string.IsNullOrEmpty(exePath) && System.IO.File.Exists(exePath))
+            {
+                _notifyIcon.Icon = Icon.ExtractAssociatedIcon(exePath) ?? SystemIcons.Application;
+            }
+            else
+            {
+                _notifyIcon.Icon = SystemIcons.Application;
+            }
+        }
+        catch
+        {
+            _notifyIcon.Icon = SystemIcons.Application;
+        }
+
         _notifyIcon.Text = "PlayPair";
         _notifyIcon.ContextMenuStrip = contextMenu;
         _notifyIcon.Visible = true;

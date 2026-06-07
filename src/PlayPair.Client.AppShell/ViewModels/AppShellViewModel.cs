@@ -277,7 +277,14 @@ public sealed class AppShellViewModel : ObservableObject
             var result = await operation();
             if (!result.Succeeded || result.State is null)
             {
-                SetError(result.ErrorMessage ?? genericFailureMessage);
+                var errMsg = result.ErrorMessage ?? genericFailureMessage;
+                if (errMsg.Contains("connection_already_in_room"))
+                {
+                    ShowTransientMessage("Connection is Stable.");
+                    return;
+                }
+
+                SetError(CleanErrorMessage(errMsg));
                 return;
             }
 
@@ -288,11 +295,13 @@ public sealed class AppShellViewModel : ObservableObject
         catch (Exception ex)
         {
             _logger.LogError(ex, "Shell action failed");
-            if (ex.ToString().Contains("connection_already_in_room"))
+            var errMsg = ex.ToString();
+            if (errMsg.Contains("connection_already_in_room"))
             {
-                ShowTransientMessage("Already in a room.");
+                ShowTransientMessage("Connection is Stable.");
                 return;
             }
+
             // Try to parse as hub exception if it has message payload
             if (ex.Message.StartsWith("{"))
             {
@@ -308,6 +317,51 @@ public sealed class AppShellViewModel : ObservableObject
             IsBusy = false;
             StateChanged?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    private string CleanErrorMessage(string rawMessage)
+    {
+        if (string.IsNullOrWhiteSpace(rawMessage))
+        {
+            return "An unexpected error occurred.";
+        }
+
+        // Try to locate JSON inside the message
+        int jsonStartIndex = rawMessage.IndexOf('{');
+        if (jsonStartIndex >= 0)
+        {
+            string jsonPart = rawMessage.Substring(jsonStartIndex);
+            try
+            {
+                using var doc = System.Text.Json.JsonDocument.Parse(jsonPart);
+                var root = doc.RootElement;
+                if (root.TryGetProperty("message", out var msgProp))
+                {
+                    return msgProp.GetString() ?? rawMessage;
+                }
+                if (root.TryGetProperty("code", out var codeProp))
+                {
+                    string code = codeProp.GetString() ?? "";
+                    return _errorHandler.FormatError(code);
+                }
+            }
+            catch
+            {
+                // Fallback to text cleaning if JSON parsing fails
+            }
+        }
+
+        string clean = rawMessage;
+        if (clean.StartsWith("An unexpected error occurred invoking"))
+        {
+            int hubExceptionIndex = clean.IndexOf("HubException:");
+            if (hubExceptionIndex >= 0)
+            {
+                clean = clean.Substring(hubExceptionIndex + "HubException:".Length).Trim();
+            }
+        }
+
+        return clean;
     }
 
     private void ApplyState(ShellSessionState state)
