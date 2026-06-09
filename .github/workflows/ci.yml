@@ -43,10 +43,12 @@ jobs:
           echo "Running vulnerable package check"
           vuln=$(dotnet list PlayPair.sln package --vulnerable)
           echo "$vuln"
-          if echo "$vuln" | grep -q "No vulnerable packages were found."; then
+          projects_count=$(grep -c "^Project(" PlayPair.sln)
+          vuln_count=$(echo "$vuln" | grep -c "has no vulnerable packages" || true)
+          if [ "$vuln_count" -eq "$projects_count" ]; then
             echo "No vulnerable packages detected"
           else
-            echo "Vulnerabilities detected:" && echo "$vuln"
+            echo "Vulnerabilities detected!"
             exit 1
           fi
 
