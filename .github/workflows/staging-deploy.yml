@@ -54,7 +54,7 @@ jobs:
 
       - name: Run container
         run: |
-          docker run -d --rm -p 8080:8080 --name playpair-staging ghcr.io/${{ env.OWNER_LC }}/playpair-server:staging-${{ github.sha }}
+          docker run -d --rm -p 8080:80 --name playpair-staging ghcr.io/${{ env.OWNER_LC }}/playpair-server:staging-${{ github.sha }}
 
       - name: Wait for /health
         run: |
