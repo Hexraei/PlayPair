@@ -1,0 +1,168 @@
+﻿2026-06-07T19:46:18.4139749Z Current runner version: '2.334.0'
+2026-06-07T19:46:18.4164777Z ##[group]Runner Image Provisioner
+2026-06-07T19:46:18.4165808Z Hosted Compute Agent
+2026-06-07T19:46:18.4166425Z Version: 20260520.533
+2026-06-07T19:46:18.4167113Z Commit: 189110e25284a9812c124fd27b339e2fb4f2f9db
+2026-06-07T19:46:18.4167883Z Build Date: 2026-05-20T17:44:04Z
+2026-06-07T19:46:18.4168889Z Worker ID: {266bfd9f-4177-4a12-8823-4dac6815b01e}
+2026-06-07T19:46:18.4169724Z Azure Region: westcentralus
+2026-06-07T19:46:18.4170359Z ##[endgroup]
+2026-06-07T19:46:18.4171847Z ##[group]Operating System
+2026-06-07T19:46:18.4172593Z Ubuntu
+2026-06-07T19:46:18.4173182Z 24.04.4
+2026-06-07T19:46:18.4173746Z LTS
+2026-06-07T19:46:18.4174292Z ##[endgroup]
+2026-06-07T19:46:18.4174863Z ##[group]Runner Image
+2026-06-07T19:46:18.4175562Z Image: ubuntu-24.04
+2026-06-07T19:46:18.4176185Z Version: 20260525.161.1
+2026-06-07T19:46:18.4177503Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260525.161/images/ubuntu/Ubuntu2404-Readme.md
+2026-06-07T19:46:18.4179237Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260525.161
+2026-06-07T19:46:18.4180320Z ##[endgroup]
+2026-06-07T19:46:18.4181565Z ##[group]GITHUB_TOKEN Permissions
+2026-06-07T19:46:18.4183778Z Contents: read
+2026-06-07T19:46:18.4184497Z Metadata: read
+2026-06-07T19:46:18.4185554Z Packages: read
+2026-06-07T19:46:18.4186238Z ##[endgroup]
+2026-06-07T19:46:18.4188855Z Secret source: Actions
+2026-06-07T19:46:18.4189814Z Prepare workflow directory
+2026-06-07T19:46:18.4597658Z Prepare all required actions
+2026-06-07T19:46:18.4636654Z Getting action download info
+2026-06-07T19:46:18.9005005Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-06-07T19:46:19.0452609Z Download action repository 'actions/setup-dotnet@v4' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2026-06-07T19:46:19.8114119Z Download action repository 'docker/login-action@v2' (SHA:465a07811f14bebb1938fbed4728c6a1ff8901fc)
+2026-06-07T19:46:20.4041190Z Download action repository 'docker/build-push-action@v5' (SHA:ca052bb54ab0790a636c9b5f226502c73d547a25)
+2026-06-07T19:46:21.4199328Z Complete job name: build-and-push
+2026-06-07T19:46:21.4896658Z ##[group]Run actions/checkout@v4
+2026-06-07T19:46:21.4897266Z with:
+2026-06-07T19:46:21.4897498Z   repository: Hexraei/playpair
+2026-06-07T19:46:21.4901101Z   token: ***
+2026-06-07T19:46:21.4901330Z   ssh-strict: true
+2026-06-07T19:46:21.4901548Z   ssh-user: git
+2026-06-07T19:46:21.4901776Z   persist-credentials: true
+2026-06-07T19:46:21.4902026Z   clean: true
+2026-06-07T19:46:21.4902250Z   sparse-checkout-cone-mode: true
+2026-06-07T19:46:21.4902605Z   fetch-depth: 1
+2026-06-07T19:46:21.4902832Z   fetch-tags: false
+2026-06-07T19:46:21.4903064Z   show-progress: true
+2026-06-07T19:46:21.4903296Z   lfs: false
+2026-06-07T19:46:21.4903493Z   submodules: false
+2026-06-07T19:46:21.4903714Z   set-safe-directory: true
+2026-06-07T19:46:21.4904300Z ##[endgroup]
+2026-06-07T19:46:21.6085810Z Syncing repository: Hexraei/playpair
+2026-06-07T19:46:21.6087992Z ##[group]Getting Git version info
+2026-06-07T19:46:21.6089051Z Working directory is '/home/runner/work/playpair/playpair'
+2026-06-07T19:46:21.6090295Z [command]/usr/bin/git version
+2026-06-07T19:46:21.6151158Z git version 2.54.0
+2026-06-07T19:46:21.6178984Z ##[endgroup]
+2026-06-07T19:46:21.6201443Z Temporarily overriding HOME='/home/runner/work/_temp/e5509eae-f2da-4f89-a679-da6740822bb0' before making global git config changes
+2026-06-07T19:46:21.6206686Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-07T19:46:21.6207376Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/playpair/playpair
+2026-06-07T19:46:21.6255453Z Deleting the contents of '/home/runner/work/playpair/playpair'
+2026-06-07T19:46:21.6260225Z ##[group]Initializing the repository
+2026-06-07T19:46:21.6265727Z [command]/usr/bin/git init /home/runner/work/playpair/playpair
+2026-06-07T19:46:21.6367542Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-06-07T19:46:21.6369092Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-06-07T19:46:21.6369750Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-06-07T19:46:21.6370342Z hint: call:
+2026-06-07T19:46:21.6370565Z hint:
+2026-06-07T19:46:21.6371156Z hint: 	git config --global init.defaultBranch <name>
+2026-06-07T19:46:21.6371524Z hint:
+2026-06-07T19:46:21.6372114Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-06-07T19:46:21.6373126Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-06-07T19:46:21.6373603Z hint:
+2026-06-07T19:46:21.6373918Z hint: 	git branch -m <name>
+2026-06-07T19:46:21.6374364Z hint:
+2026-06-07T19:46:21.6375045Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-06-07T19:46:21.6376287Z Initialized empty Git repository in /home/runner/work/playpair/playpair/.git/
+2026-06-07T19:46:21.6387355Z [command]/usr/bin/git remote add origin https://github.com/Hexraei/playpair
+2026-06-07T19:46:21.6429089Z ##[endgroup]
+2026-06-07T19:46:21.6429843Z ##[group]Disabling automatic garbage collection
+2026-06-07T19:46:21.6435346Z [command]/usr/bin/git config --local gc.auto 0
+2026-06-07T19:46:21.6464708Z ##[endgroup]
+2026-06-07T19:46:21.6465460Z ##[group]Setting up auth
+2026-06-07T19:46:21.6473037Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-07T19:46:21.6507297Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-07T19:46:21.6834919Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-07T19:46:21.6864008Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-07T19:46:21.7084395Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-07T19:46:21.7117035Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-07T19:46:21.7344853Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-06-07T19:46:21.7380681Z ##[endgroup]
+2026-06-07T19:46:21.7381133Z ##[group]Fetching the repository
+2026-06-07T19:46:21.7391229Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ed4d235e078871bc03cb34769ecf61f0b08fe162:refs/remotes/origin/main
+2026-06-07T19:46:23.4771866Z From https://github.com/Hexraei/playpair
+2026-06-07T19:46:23.4773146Z  * [new ref]         ed4d235e078871bc03cb34769ecf61f0b08fe162 -> origin/main
+2026-06-07T19:46:23.4808106Z ##[endgroup]
+2026-06-07T19:46:23.4809262Z ##[group]Determining the checkout info
+2026-06-07T19:46:23.4811487Z ##[endgroup]
+2026-06-07T19:46:23.4818157Z [command]/usr/bin/git sparse-checkout disable
+2026-06-07T19:46:23.4860898Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-06-07T19:46:23.4885929Z ##[group]Checking out the ref
+2026-06-07T19:46:23.4890934Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-06-07T19:46:23.6060078Z Switched to a new branch 'main'
+2026-06-07T19:46:23.6060642Z branch 'main' set up to track 'origin/main'.
+2026-06-07T19:46:23.6074135Z ##[endgroup]
+2026-06-07T19:46:23.6117672Z [command]/usr/bin/git log -1 --format=%H
+2026-06-07T19:46:23.6142712Z ed4d235e078871bc03cb34769ecf61f0b08fe162
+2026-06-07T19:46:23.6427083Z ##[group]Run actions/setup-dotnet@v4
+2026-06-07T19:46:23.6427435Z with:
+2026-06-07T19:46:23.6427644Z   dotnet-version: 8.0.x
+2026-06-07T19:46:23.6427887Z   cache: false
+2026-06-07T19:46:23.6428095Z ##[endgroup]
+2026-06-07T19:46:23.8255619Z [command]/home/runner/work/_actions/actions/setup-dotnet/v4/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+2026-06-07T19:46:24.2586553Z dotnet-install: .NET Core Runtime with version '10.0.8' is already installed.
+2026-06-07T19:46:24.2619455Z [command]/home/runner/work/_actions/actions/setup-dotnet/v4/externals/install-dotnet.sh --skip-non-versioned-files --channel 8.0
+2026-06-07T19:46:24.6404288Z dotnet-install: .NET Core SDK with version '8.0.421' is already installed.
+2026-06-07T19:46:24.6539032Z ##[group]Run dotnet build PlayPair.sln -c Release --no-restore
+2026-06-07T19:46:24.6539755Z [36;1mdotnet build PlayPair.sln -c Release --no-restore[0m
+2026-06-07T19:46:24.6571174Z shell: /usr/bin/bash -e {0}
+2026-06-07T19:46:24.6571458Z env:
+2026-06-07T19:46:24.6571672Z   DOTNET_ROOT: /usr/share/dotnet
+2026-06-07T19:46:24.6571938Z ##[endgroup]
+2026-06-07T19:46:32.0570585Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.AppShell/PlayPair.Client.AppShell.csproj]
+2026-06-07T19:46:32.0716087Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.Transport/PlayPair.Client.Transport.csproj]
+2026-06-07T19:46:32.0726387Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.Sync/PlayPair.Client.Sync.csproj]
+2026-06-07T19:46:32.0753351Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.MediaSession/PlayPair.Client.MediaSession.csproj]
+2026-06-07T19:46:32.1259941Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/tests/PlayPair.Client.AppShell.Tests/PlayPair.Client.AppShell.Tests.csproj]
+2026-06-07T19:46:32.1459350Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/tests/PlayPair.Client.MediaSession.Tests/PlayPair.Client.MediaSession.Tests.csproj]
+2026-06-07T19:46:32.1863905Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/tests/PlayPair.Client.Sync.Tests/PlayPair.Client.Sync.Tests.csproj]
+2026-06-07T19:46:32.5294628Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1004: Assets file '/home/runner/work/playpair/playpair/src/PlayPair.Server/obj/project.assets.json' not found. Run a NuGet package restore to generate this file. [/home/runner/work/playpair/playpair/src/PlayPair.Server/PlayPair.Server.csproj]
+2026-06-07T19:46:32.5303682Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1004: Assets file '/home/runner/work/playpair/playpair/src/PlayPair.Contracts/obj/project.assets.json' not found. Run a NuGet package restore to generate this file. [/home/runner/work/playpair/playpair/src/PlayPair.Contracts/PlayPair.Contracts.csproj]
+2026-06-07T19:46:32.5313842Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1004: Assets file '/home/runner/work/playpair/playpair/tests/PlayPair.Server.Tests/obj/project.assets.json' not found. Run a NuGet package restore to generate this file. [/home/runner/work/playpair/playpair/tests/PlayPair.Server.Tests/PlayPair.Server.Tests.csproj]
+2026-06-07T19:46:32.5690197Z 
+2026-06-07T19:46:32.5691003Z Build FAILED.
+2026-06-07T19:46:32.5706554Z 
+2026-06-07T19:46:32.5732034Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.AppShell/PlayPair.Client.AppShell.csproj]
+2026-06-07T19:46:32.5740673Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.Transport/PlayPair.Client.Transport.csproj]
+2026-06-07T19:46:32.5751152Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.Sync/PlayPair.Client.Sync.csproj]
+2026-06-07T19:46:32.5759194Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/src/PlayPair.Client.MediaSession/PlayPair.Client.MediaSession.csproj]
+2026-06-07T19:46:32.5766132Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/tests/PlayPair.Client.AppShell.Tests/PlayPair.Client.AppShell.Tests.csproj]
+2026-06-07T19:46:32.5773294Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/tests/PlayPair.Client.MediaSession.Tests/PlayPair.Client.MediaSession.Tests.csproj]
+2026-06-07T19:46:32.5780208Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets(90,5): error NETSDK1100: To build a project targeting Windows on this operating system, set the EnableWindowsTargeting property to true. [/home/runner/work/playpair/playpair/tests/PlayPair.Client.Sync.Tests/PlayPair.Client.Sync.Tests.csproj]
+2026-06-07T19:46:32.5787375Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1004: Assets file '/home/runner/work/playpair/playpair/src/PlayPair.Server/obj/project.assets.json' not found. Run a NuGet package restore to generate this file. [/home/runner/work/playpair/playpair/src/PlayPair.Server/PlayPair.Server.csproj]
+2026-06-07T19:46:32.5795395Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1004: Assets file '/home/runner/work/playpair/playpair/src/PlayPair.Contracts/obj/project.assets.json' not found. Run a NuGet package restore to generate this file. [/home/runner/work/playpair/playpair/src/PlayPair.Contracts/PlayPair.Contracts.csproj]
+2026-06-07T19:46:32.5803124Z ##[error]/usr/share/dotnet/sdk/8.0.421/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1004: Assets file '/home/runner/work/playpair/playpair/tests/PlayPair.Server.Tests/obj/project.assets.json' not found. Run a NuGet package restore to generate this file. [/home/runner/work/playpair/playpair/tests/PlayPair.Server.Tests/PlayPair.Server.Tests.csproj]
+2026-06-07T19:46:32.5806861Z     0 Warning(s)
+2026-06-07T19:46:32.5807374Z     10 Error(s)
+2026-06-07T19:46:32.5807801Z 
+2026-06-07T19:46:32.5808161Z Time Elapsed 00:00:03.13
+2026-06-07T19:46:32.6343065Z ##[error]Process completed with exit code 1.
+2026-06-07T19:46:32.6461596Z Post job cleanup.
+2026-06-07T19:46:32.7704906Z [command]/usr/bin/git version
+2026-06-07T19:46:32.7769476Z git version 2.54.0
+2026-06-07T19:46:32.7955777Z Temporarily overriding HOME='/home/runner/work/_temp/5ba216d4-1dde-4e8e-a4b4-cf5406533b8c' before making global git config changes
+2026-06-07T19:46:32.8009675Z Adding repository directory to the temporary git global config as a safe directory
+2026-06-07T19:46:32.8039751Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/playpair/playpair
+2026-06-07T19:46:32.8128961Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-06-07T19:46:32.8193808Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-06-07T19:46:32.8735303Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-06-07T19:46:32.8779367Z http.https://github.com/.extraheader
+2026-06-07T19:46:32.8862484Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-06-07T19:46:32.8891673Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-06-07T19:46:32.9339695Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-06-07T19:46:32.9400002Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-06-07T19:46:32.9862393Z Cleaning up orphan processes
+2026-06-07T19:46:33.0174419Z Terminate orphan process: pid (2523) (dotnet)
+2026-06-07T19:46:33.0248049Z Terminate orphan process: pid (2524) (dotnet)
+2026-06-07T19:46:33.0284029Z Terminate orphan process: pid (2525) (dotnet)
+2026-06-07T19:46:33.0316788Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-dotnet@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

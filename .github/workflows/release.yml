@@ -17,7 +17,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore PlayPair.sln
+        run: dotnet restore src/PlayPair.Server/PlayPair.Server.csproj
 
       - name: Publish server
         run: |
