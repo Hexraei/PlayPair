@@ -19,5 +19,3 @@ Next steps:
 1. Push tag `v0.1.0` to origin (this script attempts to push; may require credentials).
 2. Run GitHub Actions release workflow to publish server artifact.
 3. Deploy server image to staging and perform smoke E2E tests with two clients.
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>

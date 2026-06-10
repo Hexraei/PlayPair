@@ -58,8 +58,6 @@ This project is configured to work with specialized agents that can handle diffe
 
 Detailed explanation of what and why, not how.
 Related issues: #123, #456
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 ```
 
 Types: feat, fix, docs, style, refactor, test, chore
