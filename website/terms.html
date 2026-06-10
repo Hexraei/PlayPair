@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PlayPair Terms of Use — Read our minimal terms regarding the acceptable use of our software and public relay servers." />
+  <meta name="theme-color" content="#0A0A0F" />
+  <title>Terms of Use — PlayPair</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .legal-content {
+      padding: 160px 0 100px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .legal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .legal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+    }
+    .legal-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #FFF 0%, var(--text-2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .legal-meta {
+      font-size: 14px;
+      color: var(--text-3);
+      margin-bottom: 40px;
+    }
+    .legal-body h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-top: 32px;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .legal-body p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+    .legal-body ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+      color: var(--text-2);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .legal-body li {
+      margin-bottom: 8px;
+    }
+    @media (max-width: 768px) {
+      .legal-content { padding: 120px 24px 60px; }
+      .legal-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ───── Navigation ───── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/icon.png" alt="PlayPair icon" class="nav-icon" />
+        <span class="nav-wordmark">PlayPair</span>
+      </a>
+      <div class="nav-pill-group">
+        <a href="index.html#features" class="nav-pill-link">Features</a>
+        <a href="index.html#how-it-works" class="nav-pill-link">How it works</a>
+        <a href="index.html#compatibility" class="nav-pill-link">Compatibility</a>
+      </div>
+      <a href="https://github.com/Hexraei/PlayPair/raw/main/PlayPair-Portable.zip" class="btn-nav-cta" id="nav-download-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </a>
+    </div>
+  </nav>
+
+  <!-- ───── Legal Content ───── -->
+  <main class="container legal-content">
+    <div class="legal-card">
+      <h1 class="legal-title">Terms of Use</h1>
+      <p class="legal-meta">Last Updated: June 11, 2026</p>
+      
+      <div class="legal-body">
+        <p>By downloading, installing, or using the PlayPair application or visiting our website, you agree to comply with and be bound by the following Terms of Use. Please read them carefully.</p>
+
+        <h2>1. License & Scope of Use</h2>
+        <p>PlayPair grants you a personal, non-transferable, non-exclusive license to use the PlayPair software on your devices in accordance with these Terms. You may not decompile, reverse-engineer, or attempt to extract the source code of the binary launcher application without prior written consent.</p>
+
+        <h2>2. Acceptable Use of Relay Servers</h2>
+        <p>We provide a public SignalR relay server for temporary synchronization sessions. You agree to use these servers solely for media synchronization purposes. You must not:</p>
+        <ul>
+          <li>Use the servers to transmit illegal, malicious, or unauthorized data.</li>
+          <li>Perform denial-of-service (DDoS) attacks, port scanning, or try to overload/exploit the server infrastructure.</li>
+          <li>Develop third-party tools that abuse our public relays for non-sync traffic.</li>
+        </ul>
+        <p>We reserve the right to ban specific IPs or temporarily suspend public relay access without notice if we detect abusive behavior.</p>
+
+        <h2>3. Private Server Hosting</h2>
+        <p>You are permitted and encouraged to deploy your own instance of the PlayPair backend relay server in the cloud (e.g. using our Render Blueprint config) or on local hardware. When hosting your own server, you assume full responsibility for server maintenance, network costs, security, and log data storage.</p>
+
+        <h2>4. Disclaimer of Warranties</h2>
+        <p>PlayPair is provided on an "as is" and "as available" basis, without warranty of any kind, express or implied. We do not guarantee that the application or our public relay servers will be uninterrupted, secure, error-free, or compatible with all third-party media players at all times.</p>
+
+        <h2>5. Limitation of Liability</h2>
+        <p>In no event shall PlayPair, its authors, or contributors be liable for any direct, indirect, incidental, special, or consequential damages (including, but not limited to, data loss, connection issues, or service interruption) arising out of the use or inability to use the software, even if advised of the possibility of such damage.</p>
+
+        <h2>6. Third-Party Media Players</h2>
+        <p>PlayPair hooks into local operating system APIs (specifically the Windows Media Session API) to synchronize controls. PlayPair is an independent utility and is not affiliated with, endorsed by, or partnered with Spotify, YouTube, VLC, Plex, Apple Music, Google, Microsoft, or any other media provider.</p>
+
+        <h2>7. Governing Law</h2>
+        <p>These Terms shall be governed by and construed in accordance with standard international software distribution practices. Any disputes arising from these Terms will be handled in the jurisdiction of the software's primary contributors.</p>
+
+        <h2>8. Contact Information</h2>
+        <p>If you have any questions about these Terms of Use, please contact us at <a href="mailto:support@playpair.app" style="color: var(--purple-light);">support@playpair.app</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ───── Footer ───── -->
+  <footer id="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/icon.png" alt="PlayPair" class="nav-icon" />
+          <span class="nav-wordmark">PlayPair</span>
+        </a>
+        <p class="footer-tagline">Watch together, stay in sync.</p>
+        <p class="footer-platform">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          Windows 10 &amp; 11
+        </p>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <span class="footer-col-hd">Product</span>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#how-it-works">How it works</a>
+          <a href="index.html#compatibility">Compatibility</a>
+          <a href="https://github.com/Hexraei/PlayPair/raw/main/PlayPair-Portable.zip">Download</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-hd">Support</span>
+          <a href="index.html#how-it-works">User guide</a>
+          <a href="mailto:support@playpair.app">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <span>© 2026 PlayPair. All rights reserved.</span>
+        <div class="footer-bottom-right">
+          <a href="privacy.html" style="color: var(--text-3); text-decoration: none; transition: color var(--transition);" onmouseover="this.style.color='var(--text-1)'" onmouseout="this.style.color='var(--text-3)'">Privacy Policy</a>
+          <span class="footer-sep" style="opacity: 0.35; margin: 0 8px;">·</span>
+          <a href="terms.html" style="color: var(--text-3); text-decoration: none; transition: color var(--transition);" onmouseover="this.style.color='var(--text-1)'" onmouseout="this.style.color='var(--text-3)'">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

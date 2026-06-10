@@ -1021,6 +1021,14 @@ svg { display: block; flex-shrink: 0; }
   align-items: center;
   gap: 10px;
 }
+.footer-bottom-right a {
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footer-bottom-right a:hover {
+  color: var(--text-1);
+}
 .footer-sep { opacity: .35; }
 
 

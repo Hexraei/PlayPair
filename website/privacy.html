@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PlayPair Privacy Policy — Learn how we protect your privacy. Zero account registration, zero tracking, and zero media data retention." />
+  <meta name="theme-color" content="#0A0A0F" />
+  <title>Privacy Policy — PlayPair</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .legal-content {
+      padding: 160px 0 100px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .legal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .legal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+    }
+    .legal-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #FFF 0%, var(--text-2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .legal-meta {
+      font-size: 14px;
+      color: var(--text-3);
+      margin-bottom: 40px;
+    }
+    .legal-body h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-top: 32px;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .legal-body p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+    .legal-body ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+      color: var(--text-2);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .legal-body li {
+      margin-bottom: 8px;
+    }
+    @media (max-width: 768px) {
+      .legal-content { padding: 120px 24px 60px; }
+      .legal-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ───── Navigation ───── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/icon.png" alt="PlayPair icon" class="nav-icon" />
+        <span class="nav-wordmark">PlayPair</span>
+      </a>
+      <div class="nav-pill-group">
+        <a href="index.html#features" class="nav-pill-link">Features</a>
+        <a href="index.html#how-it-works" class="nav-pill-link">How it works</a>
+        <a href="index.html#compatibility" class="nav-pill-link">Compatibility</a>
+      </div>
+      <a href="https://github.com/Hexraei/PlayPair/raw/main/PlayPair-Portable.zip" class="btn-nav-cta" id="nav-download-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </a>
+    </div>
+  </nav>
+
+  <!-- ───── Legal Content ───── -->
+  <main class="container legal-content">
+    <div class="legal-card">
+      <h1 class="legal-title">Privacy Policy</h1>
+      <p class="legal-meta">Last Updated: June 11, 2026</p>
+      
+      <div class="legal-body">
+        <p>PlayPair is designed from the ground up to respect your privacy. This policy explains what information we collect, what we do not collect, and how your data is handled when using our website and application.</p>
+
+        <h2>1. Zero Account Registration</h2>
+        <p>We do not require account creation, registration, or email verification to use PlayPair. There are no profiles, passwords, or usernames stored on our servers.</p>
+
+        <h2>2. Data We Do Not Collect</h2>
+        <p>We are firm believers in data minimization. In accordance with legal regulations like GDPR and CCPA, the following data is never sent to or stored on our servers:</p>
+        <ul>
+          <li><strong>No Media Content:</strong> PlayPair does not upload, stream, host, or transfer your video or audio files. Your files remain entirely on your local storage.</li>
+          <li><strong>No Personal Identification:</strong> We do not collect names, email addresses, phone numbers, or social media handles.</li>
+          <li><strong>No Tracking Cookies:</strong> This website does not use tracking, advertising, or analytics cookies.</li>
+        </ul>
+
+        <h2>3. Ephemeral Synchronization Data</h2>
+        <p>To synchronize playback states (play, pause, seek, and active media name) between users, PlayPair utilizes a secure WebSockets relay server using Microsoft SignalR. This transmission works under the following principles:</p>
+        <ul>
+          <li><strong>Real-time Only:</strong> Synchronization commands and room codes are relayed in memory. They are not persisted to a database or disk.</li>
+          <li><strong>Instant Deletion:</strong> The moment a synchronization room is closed, all memory associated with that room code is instantly destroyed.</li>
+        </ul>
+
+        <h2>4. Server Log Data</h2>
+        <p>Our public relay server is hosted on Render. Render automatically collects standard operational logs (including IP addresses and timestamps) to prevent denial-of-service (DDoS) attacks, ensure server stability, and diagnose technical issues. These logs are maintained in compliance with Render's strict security guidelines and are not used for tracking or profiling purposes.</p>
+
+        <h2>5. Your Rights</h2>
+        <p>Because we do not store personal data, we do not have records to retrieve, modify, or delete upon request. If you host your own private relay server using our blueprint repository, you retain full operational control over your own server logs.</p>
+
+        <h2>6. Changes to this Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Any changes will be posted directly on this page with an updated modification date.</p>
+
+        <h2>7. Contact Us</h2>
+        <p>If you have any questions regarding this Privacy Policy, you can contact us at <a href="mailto:support@playpair.app" style="color: var(--purple-light);">support@playpair.app</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ───── Footer ───── -->
+  <footer id="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/icon.png" alt="PlayPair" class="nav-icon" />
+          <span class="nav-wordmark">PlayPair</span>
+        </a>
+        <p class="footer-tagline">Watch together, stay in sync.</p>
+        <p class="footer-platform">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          Windows 10 &amp; 11
+        </p>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <span class="footer-col-hd">Product</span>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#how-it-works">How it works</a>
+          <a href="index.html#compatibility">Compatibility</a>
+          <a href="https://github.com/Hexraei/PlayPair/raw/main/PlayPair-Portable.zip">Download</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-hd">Support</span>
+          <a href="index.html#how-it-works">User guide</a>
+          <a href="mailto:support@playpair.app">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <span>© 2026 PlayPair. All rights reserved.</span>
+        <div class="footer-bottom-right">
+          <a href="privacy.html" style="color: var(--text-3); text-decoration: none; transition: color var(--transition);" onmouseover="this.style.color='var(--text-1)'" onmouseout="this.style.color='var(--text-3)'">Privacy Policy</a>
+          <span class="footer-sep" style="opacity: 0.35; margin: 0 8px;">·</span>
+          <a href="terms.html" style="color: var(--text-3); text-decoration: none; transition: color var(--transition);" onmouseover="this.style.color='var(--text-1)'" onmouseout="this.style.color='var(--text-3)'">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
